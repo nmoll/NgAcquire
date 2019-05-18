@@ -1,0 +1,8 @@
+<div class="flex flex-wrap h-full">
+  <div *ngFor="let boardSquare of boardSquares" class="w-1/12">
+    <acquire-board-square
+      [boardSquare]="boardSquare"
+      (selected)="boardSquareSelected.emit($event)"
+    ></acquire-board-square>
+  </div>
+</div>
