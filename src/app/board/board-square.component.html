@@ -1,12 +1,9 @@
 <div
   class="flex h-full justify-center items-center border border-solid"
-  [class.border-green-dark]="boardSquare.state === state.DEFAULT"
-  [class.border-red]="
-    boardSquare.state === state.AVAILABLE_FOR_SELECTION ||
-    boardSquare.state === state.SELECTED
-  "
-  [class.bg-green-dark]="boardSquare.state === state.SELECTED"
-  (click)="selected.emit(boardSquare)"
+  [class.border-green-dark]="!enabled && !selected"
+  [class.border-red]="enabled || selected"
+  [class.bg-green-dark]="selected"
+  (click)="enabled && select.emit(boardSquare)"
 >
   {{ boardSquare.display }}
 </div>

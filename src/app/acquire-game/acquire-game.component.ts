@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { BoardService } from "../board/board.service";
 import { PlayerService } from "../player/player.service";
 
 @Component({
@@ -7,10 +6,9 @@ import { PlayerService } from "../player/player.service";
   templateUrl: "./acquire-game.component.html"
 })
 export class AcquireGameComponent implements OnInit {
-  constructor(
-    public playerService: PlayerService,
-    public boardService: BoardService
-  ) {}
+  constructor(public playerService: PlayerService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.playerService.loadPlayers();
+  }
 }

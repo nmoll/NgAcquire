@@ -1,8 +1,13 @@
 <div class="flex flex-wrap h-full">
-  <div *ngFor="let boardSquare of boardSquares" class="w-1/12">
+  <div
+    *ngFor="let boardSquare of boardService.boardSquares$ | async"
+    class="w-1/12"
+  >
     <acquire-board-square
       [boardSquare]="boardSquare"
-      (selected)="boardSquareSelected.emit($event)"
+      [selected]="isSelected(boardSquare) | async"
+      [enabled]="isEnabled(boardSquare) | async"
+      (select)="onSelect($event)"
     ></acquire-board-square>
   </div>
 </div>

@@ -1,91 +1,59 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Subject } from "rxjs";
-import { filter, withLatestFrom } from "rxjs/operators";
+import { select, Store } from "@ngrx/store";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { IPlayer } from "../player/player";
-import { PlayerService } from "../player/player.service";
-import { ITile } from "../tile/tile";
-import { DefaultBoardConfig } from "./board-configuration";
-import { BoardSquareState, IBoardSquare } from "./board-square";
-import * as BoardUtils from "./board.utils";
-
-const findTileByBoardSquareId = (tiles: ITile[], boardSquareId: number) =>
-  tiles.find(tile => tile.boardSquareId === boardSquareId);
-
+import * as PlayerUtils from "../player/player.utils";
+import * as BoardSquareActions from "../store/board/board-square.actions";
+import * as BoardSquareSelectors from "../store/board/board-square.selectors";
+import { BoardSquaresState } from "../store/board/board-square.state";
+import * as PlayerSelectors from "../store/player/player.selectors";
+import { IBoardSquare } from "./board-square";
 @Injectable({
   providedIn: "root"
 })
 export class BoardService {
-  public boardSquares$: BehaviorSubject<IBoardSquare[]>;
+  public boardSquares$: Observable<IBoardSquare[]>;
 
-  public selectedBoardSquare$ = new Subject<IBoardSquare>();
+  public selectedBoardSquare$: Observable<IBoardSquare>;
 
-  constructor(private playerService: PlayerService) {
-    this.boardSquares$ = new BehaviorSubject(
-      BoardUtils.createBoardSquares(DefaultBoardConfig)
+  private currentPlayer$: Observable<IPlayer>;
+
+  constructor(private store: Store<BoardSquaresState>) {
+    this.boardSquares$ = this.store.pipe(
+      select(BoardSquareSelectors.selectAllBoardSquares)
     );
 
-    this.playerService.currentPlayer$
-      .pipe(withLatestFrom(this.boardSquares$))
-      .subscribe(([player, boardSquares]) =>
-        this.updateStateOnCurrentPlayerChange(player, boardSquares)
-      );
+    this.selectedBoardSquare$ = this.store.pipe(
+      select(BoardSquareSelectors.getSelectedBoardSquare)
+    );
 
-    this.selectedBoardSquare$
-      .pipe(
-        filter(BoardUtils.canSelectBoardSquare),
-        withLatestFrom(this.boardSquares$)
-      )
-      .subscribe(([selected, boardSquares]) =>
-        this.updateStateOnBoardSelection(selected, boardSquares)
-      );
+    this.currentPlayer$ = this.store.pipe(
+      select(PlayerSelectors.getCurrentPlayer)
+    );
+  }
+
+  public setBoardSquares(boardSquares: IBoardSquare[]) {
+    this.store.dispatch(BoardSquareActions.setBoardSquares({ boardSquares }));
   }
 
   public selectBoardSquare(boardSquare: IBoardSquare) {
-    this.selectedBoardSquare$.next(boardSquare);
+    this.store.dispatch(
+      BoardSquareActions.setSelectedBoardSquare({ id: boardSquare.id })
+    );
   }
 
-  private updateStateOnBoardSelection(
-    selected: IBoardSquare,
-    boardSquares: IBoardSquare[]
-  ): void {
-    const updatedBoardSquares = boardSquares.map(boardSquare => {
-      let state = boardSquare.state;
-      if (
-        boardSquare.id != selected.id &&
-        BoardUtils.canSelectBoardSquare(boardSquare)
-      ) {
-        state = BoardSquareState.AVAILABLE_FOR_SELECTION;
-      } else if (boardSquare.id === selected.id) {
-        state = BoardSquareState.SELECTED;
-      }
-
-      return {
-        ...boardSquare,
-        state
-      };
-    });
-
-    this.boardSquares$.next(updatedBoardSquares);
+  public isBoardSquareSelected(boardSquare: IBoardSquare): Observable<boolean> {
+    return this.selectedBoardSquare$.pipe(
+      map(selected => selected && boardSquare.id === selected.id)
+    );
   }
 
-  private updateStateOnCurrentPlayerChange(
-    player: IPlayer,
-    boardSquares: IBoardSquare[]
-  ): void {
-    const updatedBoardSquares = boardSquares.map(boardSquare => ({
-      ...boardSquare,
-      state: this.getBoardSquareState(boardSquare, player)
-    }));
-
-    this.boardSquares$.next(updatedBoardSquares);
-  }
-
-  private getBoardSquareState(
-    boardSquare: IBoardSquare,
-    currentPlayer: IPlayer
-  ): BoardSquareState {
-    return findTileByBoardSquareId(currentPlayer.tiles, boardSquare.id)
-      ? BoardSquareState.AVAILABLE_FOR_SELECTION
-      : BoardSquareState.DEFAULT;
+  public isBoardSquareAvailableForSelection(
+    boardSquare: IBoardSquare
+  ): Observable<boolean> {
+    return this.currentPlayer$.pipe(
+      map(player => PlayerUtils.playerHasTile(player, boardSquare.id))
+    );
   }
 }

@@ -1,40 +1,67 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { select, Store } from "@ngrx/store";
+import { Observable } from "rxjs";
+import * as PlayerActions from "../store/player/player.actions";
+import * as PlayerSelectors from "../store/player/player.selectors";
+import { PlayerState } from "../store/player/player.state";
 import { TileBagService } from "../tile/tile-bag.service";
 import { IPlayer } from "./player";
-
-export const STARTING_CASH = 6000;
-export const MAX_TILES_IN_HAND = 6;
+import { DefaultPlayerConfig, IPlayerConfig } from "./player-config";
 
 @Injectable({
   providedIn: "root"
 })
 export class PlayerService {
-  public players$: BehaviorSubject<IPlayer[]>;
-  public currentPlayer$: BehaviorSubject<IPlayer>;
+  public players$: Observable<IPlayer[]>;
 
-  constructor(private tileBagService: TileBagService) {
-    const players = this.initPlayers();
-    this.players$ = new BehaviorSubject(players);
-    this.currentPlayer$ = new BehaviorSubject(players[0]);
+  public currentPlayer$: Observable<IPlayer>;
+
+  constructor(
+    private store: Store<PlayerState>,
+    private tileBagService: TileBagService
+  ) {
+    this.players$ = this.store.pipe(select(PlayerSelectors.selectAllPlayers));
+
+    this.currentPlayer$ = this.store.pipe(
+      select(PlayerSelectors.getCurrentPlayer)
+    );
   }
 
-  private initPlayers(): IPlayer[] {
+  public loadPlayers() {
+    const players = this.initMockPlayers(DefaultPlayerConfig);
+    const currentPlayer = players[0];
+
+    this.setPlayers(players);
+    this.setCurrentPlayer(currentPlayer);
+  }
+
+  public setPlayers(players: IPlayer[]) {
+    this.store.dispatch(PlayerActions.setPlayers({ players }));
+  }
+
+  public setCurrentPlayer(player: IPlayer) {
+    this.store.dispatch(PlayerActions.setCurrentPlayer({ id: player.id }));
+  }
+
+  private initMockPlayers(playerConfig: IPlayerConfig): IPlayer[] {
     return [
       {
+        id: 1,
         name: "Nate",
-        cash: STARTING_CASH,
-        tiles: this.tileBagService.takeRandomTiles(MAX_TILES_IN_HAND)
+        cash: playerConfig.startingCash,
+        tiles: this.tileBagService.takeRandomTiles(playerConfig.maxTilesInHand)
       },
       {
+        id: 2,
         name: "Kate",
-        cash: STARTING_CASH,
-        tiles: this.tileBagService.takeRandomTiles(MAX_TILES_IN_HAND)
+        cash: playerConfig.startingCash,
+        tiles: this.tileBagService.takeRandomTiles(playerConfig.maxTilesInHand)
       },
       {
+        id: 3,
         name: "Computer",
-        cash: STARTING_CASH,
-        tiles: this.tileBagService.takeRandomTiles(MAX_TILES_IN_HAND)
+        cash: playerConfig.startingCash,
+        tiles: this.tileBagService.takeRandomTiles(playerConfig.maxTilesInHand)
       }
     ];
   }

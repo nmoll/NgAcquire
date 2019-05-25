@@ -7,11 +7,7 @@
         ></acquire-player-deck>
       </div>
       <div class="bg-green-light flex-grow">
-        <acquire-board
-          [boardSquares]="boardService.boardSquares$ | async"
-          [currentPlayer]="playerService.currentPlayer$ | async"
-          (boardSquareSelected)="boardService.selectBoardSquare($event)"
-        ></acquire-board>
+        <acquire-board></acquire-board>
       </div>
     </div>
   </div>

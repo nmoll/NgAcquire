@@ -1,5 +1,5 @@
 import { IBoardConfiguration } from "./board-configuration";
-import { BoardSquareState, IBoardSquare } from "./board-square";
+import { IBoardSquare } from "./board-square";
 
 /**
  * Generates the board squares based off the board dimensions
@@ -14,16 +14,9 @@ export const createBoardSquares = (boardConfig: IBoardConfiguration) => {
         id: id++,
         positionX,
         positionY,
-        display,
-        state: BoardSquareState.DEFAULT
+        display
       });
     }
   }
   return squares;
 };
-
-/**
- * @returns whether the board square is available for selection
- */
-export const canSelectBoardSquare = (boardSquare: IBoardSquare) =>
-  boardSquare.state === BoardSquareState.AVAILABLE_FOR_SELECTION;

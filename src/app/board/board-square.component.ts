@@ -5,7 +5,7 @@ import {
   Input,
   Output
 } from "@angular/core";
-import { BoardSquareState, IBoardSquare } from "./board-square";
+import { IBoardSquare } from "./board-square";
 
 @Component({
   selector: "acquire-board-square",
@@ -13,11 +13,15 @@ import { BoardSquareState, IBoardSquare } from "./board-square";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoardSquareComponent {
-  public state = BoardSquareState;
-
   @Input()
   public boardSquare: IBoardSquare;
 
+  @Input()
+  public selected: boolean;
+
+  @Input()
+  public enabled: boolean;
+
   @Output()
-  public selected = new EventEmitter<IBoardSquare>();
+  public select = new EventEmitter<IBoardSquare>();
 }
