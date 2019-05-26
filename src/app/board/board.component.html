@@ -1,6 +1,6 @@
 <div class="flex flex-wrap h-full">
   <div
-    *ngFor="let boardSquare of boardService.boardSquares$ | async"
+    *ngFor="let boardSquare of boardSquareFacade.boardSquares$ | async"
     class="w-1/12"
   >
     <acquire-board-square

@@ -3,7 +3,7 @@
     <div class="flex flex-col h-full">
       <div class="bg-green-darker text-white">
         <acquire-player-deck
-          [players]="playerService.players$ | async"
+          [players]="playerFacade.players$ | async"
         ></acquire-player-deck>
       </div>
       <div class="bg-green-light flex-grow">

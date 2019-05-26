@@ -1,32 +1,26 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Observable } from "rxjs";
-import { DefaultBoardConfig } from "./board-configuration";
+import { BoardSquareFacade } from "../store/board/board-square.facade";
 import { IBoardSquare } from "./board-square";
-import { BoardService } from "./board.service";
-import * as BoardUtils from "./board.utils";
 @Component({
   selector: "acquire-board",
   templateUrl: "./board.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BoardComponent implements OnInit {
-  constructor(public boardService: BoardService) {}
+export class BoardComponent {
+  constructor(public boardSquareFacade: BoardSquareFacade) {}
 
-  public ngOnInit(): void {
-    this.boardService.setBoardSquares(
-      BoardUtils.createBoardSquares(DefaultBoardConfig)
+  public isEnabled(boardSquare: IBoardSquare): Observable<boolean> {
+    return this.boardSquareFacade.isBoardSquareAvailableForSelection(
+      boardSquare
     );
   }
 
-  public isEnabled(boardSquare: IBoardSquare): Observable<boolean> {
-    return this.boardService.isBoardSquareAvailableForSelection(boardSquare);
-  }
-
   public isSelected(boardSquare: IBoardSquare): Observable<boolean> {
-    return this.boardService.isBoardSquareSelected(boardSquare);
+    return this.boardSquareFacade.isBoardSquareSelected(boardSquare);
   }
 
   public onSelect(boardSquare: IBoardSquare) {
-    this.boardService.selectBoardSquare(boardSquare);
+    this.boardSquareFacade.selectBoardSquare(boardSquare);
   }
 }

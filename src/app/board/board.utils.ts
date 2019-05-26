@@ -14,7 +14,8 @@ export const createBoardSquares = (boardConfig: IBoardConfiguration) => {
         id: id++,
         positionX,
         positionY,
-        display
+        display,
+        tile: null
       });
     }
   }

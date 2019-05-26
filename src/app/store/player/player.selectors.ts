@@ -25,3 +25,11 @@ export const getCurrentPlayer = createSelector(
   getCurrentPlayerId,
   (entities, currentPlayerId) => entities[currentPlayerId]
 );
+
+export const getAllPlayerTiles = createSelector(
+  selectAllPlayers,
+  players =>
+    players
+      .map(player => player.tiles)
+      .reduce((result, tiles) => result.concat(tiles), [])
+);

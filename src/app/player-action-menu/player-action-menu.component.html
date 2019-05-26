@@ -5,6 +5,17 @@
     </span>
   </div>
   <div class="flex-grow p-5 bg-grey-dark text-grey-lightest">
-    Action menu content
+    <ng-container [ngSwitch]="playerActionMenuFacade.activeMenuType$ | async">
+      <acquire-player-action-menu-place-tile
+        *ngSwitchCase="actionMenuType.PLACE_TILE"
+        [selectedBoardSquare]="boardSquareFacade.selectedBoardSquare$ | async"
+        (confirm)="playerActionMenuFacade.confirmTilePlacement($event)"
+      ></acquire-player-action-menu-place-tile>
+
+      <acquire-player-action-menu-end-turn
+        *ngSwitchCase="actionMenuType.END_TURN"
+        (endTurn)="playerActionMenuFacade.endTurn()"
+      ></acquire-player-action-menu-end-turn>
+    </ng-container>
   </div>
 </div>

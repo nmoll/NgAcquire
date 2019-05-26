@@ -1,3 +1,5 @@
+import { ITile } from "../tile/tile";
+
 /**
  * Board square
  */
@@ -21,4 +23,9 @@ export interface IBoardSquare {
    * String used for display purposes
    */
   display: string;
+
+  /**
+   * Tile played on the square
+   */
+  tile: ITile;
 }

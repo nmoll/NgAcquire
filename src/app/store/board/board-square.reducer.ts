@@ -1,19 +1,24 @@
 import { createReducer, on } from "@ngrx/store";
-import {
-  setBoardSquares,
-  setSelectedBoardSquare
-} from "./board-square.actions";
+import * as BoardSquareActions from "./board-square.actions";
 import { boardSquareAdapter, initialState } from "./board-square.state";
 
 export const boardSquaresReducer = createReducer(
   initialState,
 
-  on(setBoardSquares, (state, { boardSquares }) =>
+  on(BoardSquareActions.setBoardSquares, (state, { boardSquares }) =>
     boardSquareAdapter.addMany(boardSquares, state)
   ),
 
-  on(setSelectedBoardSquare, (state, { id }) => ({
+  on(BoardSquareActions.setSelectedBoardSquare, (state, { id }) => ({
     ...state,
     selectedBoardSquareId: id
-  }))
+  })),
+
+  on(
+    BoardSquareActions.tilePlacedUpdateBoardSquareTile,
+    (state, { update }) => ({
+      ...boardSquareAdapter.updateOne(update, state),
+      selectedBoardSquareId: null
+    })
+  )
 );

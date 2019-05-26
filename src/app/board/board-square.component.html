@@ -2,7 +2,7 @@
   class="flex h-full justify-center items-center border border-solid"
   [class.border-green-dark]="!enabled && !selected"
   [class.border-red]="enabled || selected"
-  [class.bg-green-dark]="selected"
+  [class.bg-green-dark]="selected || !!boardSquare.tile"
   (click)="enabled && select.emit(boardSquare)"
 >
   {{ boardSquare.display }}
