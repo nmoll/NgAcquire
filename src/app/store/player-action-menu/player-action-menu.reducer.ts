@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import * as PlayerActionMenuActions from "./player-action-menu.actions";
+import { PlayerActionMenuActions } from "./player-action-menu.actions";
 import { initialState } from "./player-action-menu.state";
 
 export const playerActionMenuReducer = createReducer(

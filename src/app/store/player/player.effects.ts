@@ -9,9 +9,9 @@ import {
 } from "src/app/player/player-config";
 import * as PlayerUtils from "../../player/player.utils";
 import * as TileUtils from "../../tile/tile.utils";
-import * as PlayerActionMenuActions from "../player-action-menu/player-action-menu.actions";
+import { PlayerActionMenuActions } from "../player-action-menu/player-action-menu.actions";
 import { TileFacade } from "../tile/tile.facade";
-import * as PlayerActions from "./player.actions";
+import { PlayerActions } from "./player.actions";
 import { PlayerFacade } from "./player.facade";
 
 @Injectable({
@@ -26,10 +26,10 @@ export class PlayerEffects {
 
   loadPlayers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PlayerActions.initLoadPlayers),
+      ofType(PlayerActions.loadPlayers),
       mergeMap(() =>
         this.mockGetPlayers(DefaultPlayerConfig).pipe(
-          map(players => PlayerActions.initLoadPlayersSuccess({ players }))
+          map(players => PlayerActions.loadPlayersSuccess({ players }))
         )
       )
     )

@@ -1,29 +1,27 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { getAllPlayerTiles } from "../player/player.selectors";
+import { PlayerSelectors } from "../player/player.selectors";
 import { tileAdapter, TileState } from "./tile.state";
 
-export const getTileState = createFeatureSelector<TileState>("tileState");
+const getTileState = createFeatureSelector<TileState>("tileState");
 
-export const {
-  selectIds,
+const { selectEntities, selectAll } = tileAdapter.getSelectors(getTileState);
+
+const getTileById = createSelector(
   selectEntities,
-  selectAll
-} = tileAdapter.getSelectors(getTileState);
-
-export const selectTileIds = selectIds;
-export const selectTileEntities = selectEntities;
-export const selectAllTiles = selectAll;
-
-export const getTileById = createSelector(
-  selectTileEntities,
   (entities, props: { id: number }) => entities[props.id]
 );
 
-export const getAvailableTiles = createSelector(
-  selectAllTiles,
-  getAllPlayerTiles,
+const getAvailableTiles = createSelector(
+  selectAll,
+  PlayerSelectors.getAllPlayerTiles,
   (tiles, playerTiles) =>
     tiles.filter(
       tile => !playerTiles.find(t => t.boardSquareId === tile.boardSquareId)
     )
 );
+
+export const TileSelectors = {
+  getAllTiles: selectAll,
+  getTileById,
+  getAvailableTiles
+};

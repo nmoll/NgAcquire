@@ -4,8 +4,8 @@ import { Observable } from "rxjs";
 import { DefaultBoardConfig } from "src/app/board/board-configuration";
 import { ITile } from "src/app/tile/tile";
 import * as TileUtils from "../../tile/tile.utils";
-import * as TileActions from "./tile.actions";
-import * as TileSelectors from "./tile.selectors";
+import { TileActions } from "./tile.actions";
+import { TileSelectors } from "./tile.selectors";
 import { TileState } from "./tile.state";
 
 @Injectable({
@@ -24,7 +24,7 @@ export class TileFacade {
     );
   }
 
-  public initLoadTiles(): void {
+  public loadTiles(): void {
     this.store.dispatch(
       TileActions.setTiles({ tiles: TileUtils.createTiles(DefaultBoardConfig) })
     );

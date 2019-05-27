@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { IPlayer } from "../../player/player";
-import * as PlayerActions from "../player/player.actions";
-import * as PlayerSelectors from "../player/player.selectors";
+import { PlayerActions } from "../player/player.actions";
+import { PlayerSelectors } from "../player/player.selectors";
 import { PlayerState } from "../player/player.state";
 
 @Injectable({
@@ -15,7 +15,7 @@ export class PlayerFacade {
   public currentPlayer$: Observable<IPlayer>;
 
   constructor(private store: Store<PlayerState>) {
-    this.players$ = this.store.pipe(select(PlayerSelectors.selectAllPlayers));
+    this.players$ = this.store.pipe(select(PlayerSelectors.getAllPlayers));
 
     this.currentPlayer$ = this.store.pipe(
       select(PlayerSelectors.getCurrentPlayer)
@@ -23,7 +23,7 @@ export class PlayerFacade {
   }
 
   public loadPlayers() {
-    this.store.dispatch(PlayerActions.initLoadPlayers());
+    this.store.dispatch(PlayerActions.loadPlayers());
   }
 
   public setCurrentPlayer(player: IPlayer) {

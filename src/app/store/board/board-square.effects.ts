@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { of } from "rxjs";
 import { map, mergeMap, withLatestFrom } from "rxjs/operators";
-import * as PlayerActionMenuActions from "../player-action-menu/player-action-menu.actions";
+import { PlayerActionMenuActions } from "../player-action-menu/player-action-menu.actions";
 import { TileFacade } from "../tile/tile.facade";
-import * as BoardSquareActions from "./board-square.actions";
+import { BoardSquareActions } from "./board-square.actions";
 
 @Injectable({
   providedIn: "root"
@@ -21,7 +21,7 @@ export class BoardSquareEffects {
         )
       ),
       map(([boardSquare, tile]) =>
-        BoardSquareActions.tilePlacedUpdateBoardSquareTile({
+        BoardSquareActions.updateBoardSquare({
           update: {
             id: boardSquare.id,
             changes: {

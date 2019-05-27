@@ -9,10 +9,10 @@ import { IPlayer } from "src/app/player/player";
 import * as BoardUtils from "../../board/board.utils";
 import * as PlayerUtils from "../../player/player.utils";
 import { PlayerActionMenuFacade } from "../player-action-menu/player-action-menu.facade";
-import * as PlayerSelectors from "../player/player.selectors";
-import * as BoardSquareActions from "./board-square.actions";
-import * as BoardSquareSelectors from "./board-square.selectors";
-import { BoardSquaresState } from "./board-square.state";
+import { PlayerSelectors } from "../player/player.selectors";
+import { BoardSquareActions } from "./board-square.actions";
+import { BoardSquareSelectors } from "./board-square.selectors";
+import { BoardSquareState } from "./board-square.state";
 
 @Injectable({
   providedIn: "root"
@@ -25,11 +25,11 @@ export class BoardSquareFacade {
   private currentPlayer$: Observable<IPlayer>;
 
   constructor(
-    private store: Store<BoardSquaresState>,
+    private store: Store<BoardSquareState>,
     private playerActionMenuFacade: PlayerActionMenuFacade
   ) {
     this.boardSquares$ = this.store.pipe(
-      select(BoardSquareSelectors.selectAllBoardSquares)
+      select(BoardSquareSelectors.getAllBoardSquares)
     );
 
     this.selectedBoardSquare$ = this.store.pipe(
@@ -41,7 +41,7 @@ export class BoardSquareFacade {
     );
   }
 
-  public initLoadBoardSquares() {
+  public loadBoardSquares() {
     this.store.dispatch(
       BoardSquareActions.setBoardSquares({
         boardSquares: BoardUtils.createBoardSquares(DefaultBoardConfig)
@@ -49,19 +49,19 @@ export class BoardSquareFacade {
     );
   }
 
-  public selectBoardSquare(boardSquare: IBoardSquare) {
+  public select(boardSquare: IBoardSquare) {
     this.store.dispatch(
       BoardSquareActions.setSelectedBoardSquare({ id: boardSquare.id })
     );
   }
 
-  public isBoardSquareSelected(boardSquare: IBoardSquare): Observable<boolean> {
+  public isSelected(boardSquare: IBoardSquare): Observable<boolean> {
     return this.selectedBoardSquare$.pipe(
       map(selected => selected && boardSquare.id === selected.id)
     );
   }
 
-  public isBoardSquareAvailableForSelection(
+  public isAvailableForSelection(
     boardSquare: IBoardSquare
   ): Observable<boolean> {
     return combineLatest(

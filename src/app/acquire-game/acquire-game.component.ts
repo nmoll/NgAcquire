@@ -15,8 +15,8 @@ export class AcquireGameComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.boardSquareFacade.initLoadBoardSquares();
-    this.tileFacade.initLoadTiles();
+    this.boardSquareFacade.loadBoardSquares();
+    this.tileFacade.loadTiles();
     this.playerFacade.loadPlayers();
   }
 }

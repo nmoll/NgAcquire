@@ -1,28 +1,30 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { boardSquareAdapter, BoardSquaresState } from "./board-square.state";
+import { boardSquareAdapter, BoardSquareState } from "./board-square.state";
 
-export const getBoardSquaresState = createFeatureSelector<BoardSquaresState>(
-  "boardSquaresState"
+const getBoardSquareState = createFeatureSelector<BoardSquareState>(
+  "boardSquareState"
 );
 
-export const {
+const {
   selectIds,
   selectEntities,
   selectAll
-} = boardSquareAdapter.getSelectors(getBoardSquaresState);
+} = boardSquareAdapter.getSelectors(getBoardSquareState);
 
-export const selectBoardSquareIds = selectIds;
-export const selectBoardSquareEntities = selectEntities;
-export const selectAllBoardSquares = selectAll;
-
-export const getSelectedBoardSquareId = createSelector(
-  getBoardSquaresState,
+const getSelectedBoardSquareId = createSelector(
+  getBoardSquareState,
   state => state.selectedBoardSquareId
 );
 
-export const getSelectedBoardSquare = createSelector(
-  selectBoardSquareEntities,
+const getSelectedBoardSquare = createSelector(
+  selectEntities,
   getSelectedBoardSquareId,
   (entities, selectedBoardSquareId) =>
     selectedBoardSquareId && entities[selectedBoardSquareId]
 );
+
+export const BoardSquareSelectors = {
+  getAllBoardSquares: selectAll,
+  getSelectedBoardSquareId,
+  getSelectedBoardSquare
+};

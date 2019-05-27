@@ -6,8 +6,8 @@ import { playersReducer } from "./player/player.reducer";
 import { tileReducer } from "./tile/tile.reducer";
 
 export const reducers: ActionReducerMap<IAppState> = {
-  boardSquaresState: boardSquaresReducer,
-  playersState: playersReducer,
+  boardSquareState: boardSquaresReducer,
+  playerState: playersReducer,
   tileState: tileReducer,
   playerActionMenuState: playerActionMenuReducer
 };

@@ -1,10 +1,10 @@
 import { createReducer, on } from "@ngrx/store";
-import * as PlayerActions from "./player.actions";
+import { PlayerActions } from "./player.actions";
 import { initialState, playerAdapter } from "./player.state";
 
 export const playersReducer = createReducer(
   initialState,
-  on(PlayerActions.initLoadPlayersSuccess, (state, { players }) => ({
+  on(PlayerActions.loadPlayersSuccess, (state, { players }) => ({
     ...playerAdapter.addMany(players, state),
     currentPlayerId: players[0].id
   })),

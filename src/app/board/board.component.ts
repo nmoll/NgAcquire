@@ -11,16 +11,14 @@ export class BoardComponent {
   constructor(public boardSquareFacade: BoardSquareFacade) {}
 
   public isEnabled(boardSquare: IBoardSquare): Observable<boolean> {
-    return this.boardSquareFacade.isBoardSquareAvailableForSelection(
-      boardSquare
-    );
+    return this.boardSquareFacade.isAvailableForSelection(boardSquare);
   }
 
   public isSelected(boardSquare: IBoardSquare): Observable<boolean> {
-    return this.boardSquareFacade.isBoardSquareSelected(boardSquare);
+    return this.boardSquareFacade.isSelected(boardSquare);
   }
 
   public onSelect(boardSquare: IBoardSquare) {
-    this.boardSquareFacade.selectBoardSquare(boardSquare);
+    this.boardSquareFacade.select(boardSquare);
   }
 }
