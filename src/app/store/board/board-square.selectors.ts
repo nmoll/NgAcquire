@@ -5,11 +5,9 @@ const getBoardSquareState = createFeatureSelector<BoardSquareState>(
   "boardSquareState"
 );
 
-const {
-  selectIds,
-  selectEntities,
-  selectAll
-} = boardSquareAdapter.getSelectors(getBoardSquareState);
+const { selectEntities, selectAll } = boardSquareAdapter.getSelectors(
+  getBoardSquareState
+);
 
 const getSelectedBoardSquareId = createSelector(
   getBoardSquareState,

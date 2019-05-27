@@ -9,13 +9,18 @@
       <acquire-player-action-menu-place-tile
         *ngSwitchCase="actionMenuType.PLACE_TILE"
         [selectedBoardSquare]="boardSquareFacade.selectedBoardSquare$ | async"
-        (confirm)="playerActionMenuFacade.confirmTilePlacement($event)"
+        (confirm)="playerFacade.confirmTilePlacement($event)"
       ></acquire-player-action-menu-place-tile>
 
       <acquire-player-action-menu-end-turn
         *ngSwitchCase="actionMenuType.END_TURN"
-        (endTurn)="playerActionMenuFacade.endTurn()"
+        (endTurn)="playerFacade.endTurn()"
       ></acquire-player-action-menu-end-turn>
+
+      <acquire-player-action-menu-computer-moving
+        *ngSwitchCase="actionMenuType.COMPUTER_MOVING"
+      >
+      </acquire-player-action-menu-computer-moving>
     </ng-container>
   </div>
 </div>

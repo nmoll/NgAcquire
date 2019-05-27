@@ -7,6 +7,7 @@ import { AppComponent } from "./app.component";
 import { AcquireGameComponent } from "./components/acquire-game/acquire-game.component";
 import { BoardSquareComponent } from "./components/board/board-square.component";
 import { BoardComponent } from "./components/board/board.component";
+import { PlayerActionMenuComputerMovingComponent } from "./components/player-action-menu/player-action-menu-computer-moving.component";
 import { PlayerActionMenuEndTurn } from "./components/player-action-menu/player-action-menu-end-turn.component";
 import { PlayerActionMenuPlaceTileComponent } from "./components/player-action-menu/player-action-menu-place-tile.component";
 import { PlayerActionMenuComponent } from "./components/player-action-menu/player-action-menu.component";
@@ -24,6 +25,7 @@ import { PlayerEffects } from "./store/player/player.effects";
     PlayerDeckComponent,
     PlayerActionMenuComponent,
     PlayerActionMenuPlaceTileComponent,
+    PlayerActionMenuComputerMovingComponent,
     PlayerActionMenuEndTurn,
     BoardSquareComponent
   ],

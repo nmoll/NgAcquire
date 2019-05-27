@@ -6,10 +6,9 @@ import {
   DefaultPlayerConfig,
   IPlayerConfig
 } from "src/app/config/player-config";
-import { IPlayer } from "src/app/models/player";
+import { IPlayer, PlayerType } from "src/app/models/player";
 import { PlayerUtils } from "src/app/utils/player.utils";
 import { TileUtils } from "src/app/utils/tile.utils";
-import { PlayerActionMenuActions } from "../player-action-menu/player-action-menu.actions";
 import { TileFacade } from "../tile/tile.facade";
 import { PlayerActions } from "./player.actions";
 import { PlayerFacade } from "./player.facade";
@@ -36,10 +35,9 @@ export class PlayerEffects {
   );
 
   pickTilesOnTurnStart$ = createEffect(() =>
-    this.playerFacade.currentPlayer$.pipe(
+    this.playerFacade.currentPlayerChanged$.pipe(
       filter(
-        player =>
-          player && player.tiles.length < DefaultPlayerConfig.maxTilesInHand
+        player => player.tiles.length < DefaultPlayerConfig.maxTilesInHand
       ),
       withLatestFrom(this.tileFacade.tilesInBag$),
       map(([player, tiles]) =>
@@ -63,7 +61,7 @@ export class PlayerEffects {
 
   removePlayerTileOnConfirmPlace$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PlayerActionMenuActions.confirmTilePlacement),
+      ofType(PlayerActions.confirmTilePlacement),
       withLatestFrom(this.playerFacade.currentPlayer$),
       map(([{ boardSquare }, player]) =>
         PlayerActions.updatePlayer({
@@ -84,7 +82,7 @@ export class PlayerEffects {
 
   endTurn$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PlayerActionMenuActions.endTurn),
+      ofType(PlayerActions.endTurn),
       withLatestFrom(
         this.playerFacade.currentPlayer$,
         this.playerFacade.players$
@@ -103,19 +101,22 @@ export class PlayerEffects {
         id: 1,
         name: "Nate",
         cash: playerConfig.startingCash,
-        tiles: []
+        tiles: [],
+        playerType: PlayerType.HUMAN
       },
       {
         id: 2,
         name: "Kate",
         cash: playerConfig.startingCash,
-        tiles: []
+        tiles: [],
+        playerType: PlayerType.HUMAN
       },
       {
         id: 3,
         name: "Computer",
         cash: playerConfig.startingCash,
-        tiles: []
+        tiles: [],
+        playerType: PlayerType.COMPUTER
       }
     ]);
   }

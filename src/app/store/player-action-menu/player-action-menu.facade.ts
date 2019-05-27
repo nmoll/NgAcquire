@@ -1,9 +1,7 @@
 import { Injectable } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { IBoardSquare } from "src/app/models/board-square";
 import { PlayerActionMenuType } from "src/app/models/player-action-menu-type";
-import { PlayerActionMenuActions } from "./player-action-menu.actions";
 import { PlayerActionMenuSelectors } from "./player-action-menu.selectors";
 import { PlayerActionMenuState } from "./player-action-menu.state";
 
@@ -17,15 +15,5 @@ export class PlayerActionMenuFacade {
     this.activeMenuType$ = this.store.pipe(
       select(PlayerActionMenuSelectors.getActiveMenuType)
     );
-  }
-
-  public confirmTilePlacement(boardSquare: IBoardSquare): void {
-    this.store.dispatch(
-      PlayerActionMenuActions.confirmTilePlacement({ boardSquare })
-    );
-  }
-
-  public endTurn(): void {
-    this.store.dispatch(PlayerActionMenuActions.endTurn());
   }
 }

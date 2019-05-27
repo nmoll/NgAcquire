@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { of } from "rxjs";
 import { map, mergeMap, withLatestFrom } from "rxjs/operators";
-import { PlayerActionMenuActions } from "../player-action-menu/player-action-menu.actions";
+import { PlayerActions } from "../player/player.actions";
 import { TileFacade } from "../tile/tile.facade";
 import { BoardSquareActions } from "./board-square.actions";
 
@@ -14,7 +14,7 @@ export class BoardSquareEffects {
 
   tilePlaced$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PlayerActionMenuActions.confirmTilePlacement),
+      ofType(PlayerActions.confirmTilePlacement),
       mergeMap(({ boardSquare }) =>
         of(boardSquare).pipe(
           withLatestFrom(this.tileFacade.getTileById(boardSquare.id))
