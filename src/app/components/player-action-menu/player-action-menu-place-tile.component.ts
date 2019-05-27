@@ -1,5 +1,11 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { IBoardSquare } from "../board/board-square";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from "@angular/core";
+import { IBoardSquare } from "../../models/board-square";
 
 @Component({
   selector: "acquire-player-action-menu-place-tile",
@@ -7,7 +13,8 @@ import { IBoardSquare } from "../board/board-square";
     <button [disabled]="!selectedBoardSquare" (click)="onConfirm()">
       Confirm Placement
     </button>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlayerActionMenuPlaceTileComponent {
   @Input()

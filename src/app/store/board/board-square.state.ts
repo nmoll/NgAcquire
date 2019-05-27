@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from "@ngrx/entity";
-import { IBoardSquare } from "src/app/board/board-square";
+import { IBoardSquare } from "src/app/models/board-square";
 
 export interface BoardSquareState extends EntityState<IBoardSquare> {
   selectedBoardSquareId: number | null;

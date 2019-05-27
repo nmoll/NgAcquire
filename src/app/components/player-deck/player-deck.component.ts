@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
-import { IPlayer } from "../player/player";
+import { IPlayer } from "../../models/player";
 
 @Component({
   selector: "acquire-player-deck",

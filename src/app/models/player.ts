@@ -1,4 +1,4 @@
-import { ITile } from "../tile/tile";
+import { ITile } from "./tile";
 
 export interface IPlayer {
   id: number;

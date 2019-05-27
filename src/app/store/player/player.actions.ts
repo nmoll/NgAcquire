@@ -1,6 +1,6 @@
 import { Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
-import { IPlayer } from "src/app/player/player";
+import { IPlayer } from "src/app/models/player";
 
 export const PlayerActions = {
   loadPlayers: createAction("[Init] Load Players"),

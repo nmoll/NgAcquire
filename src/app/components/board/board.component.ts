@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Observable } from "rxjs";
-import { BoardSquareFacade } from "../store/board/board-square.facade";
-import { IBoardSquare } from "./board-square";
+import { BoardSquareFacade } from "src/app/store/board/board-square.facade";
+import { IBoardSquare } from "../../models/board-square";
 @Component({
   selector: "acquire-board",
   templateUrl: "./board.component.html",

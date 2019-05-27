@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
-import { IBoardSquare } from "src/app/board/board-square";
-import { PlayerActionMenuType } from "src/app/player-action-menu/player-action-menu-type";
+import { IBoardSquare } from "src/app/models/board-square";
+import { PlayerActionMenuType } from "src/app/models/player-action-menu-type";
 
 export const PlayerActionMenuActions = {
   setActiveMenuType: createAction(

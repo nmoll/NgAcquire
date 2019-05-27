@@ -2,13 +2,13 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Observable, of } from "rxjs";
 import { filter, map, mergeMap, withLatestFrom } from "rxjs/operators";
-import { IPlayer } from "src/app/player/player";
 import {
   DefaultPlayerConfig,
   IPlayerConfig
-} from "src/app/player/player-config";
-import * as PlayerUtils from "../../player/player.utils";
-import * as TileUtils from "../../tile/tile.utils";
+} from "src/app/config/player-config";
+import { IPlayer } from "src/app/models/player";
+import { PlayerUtils } from "src/app/utils/player.utils";
+import { TileUtils } from "src/app/utils/tile.utils";
 import { PlayerActionMenuActions } from "../player-action-menu/player-action-menu.actions";
 import { TileFacade } from "../tile/tile.facade";
 import { PlayerActions } from "./player.actions";

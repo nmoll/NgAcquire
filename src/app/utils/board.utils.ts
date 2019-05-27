@@ -1,10 +1,10 @@
-import { IBoardConfiguration } from "./board-configuration";
-import { IBoardSquare } from "./board-square";
+import { IBoardConfig } from "../config/board-config";
+import { IBoardSquare } from "../models/board-square";
 
 /**
  * Generates the board squares based off the board dimensions
  */
-export const createBoardSquares = (boardConfig: IBoardConfiguration) => {
+const createBoardSquares = (boardConfig: IBoardConfig) => {
   const squares: IBoardSquare[] = [];
   var id = 1;
   for (var positionY = 1; positionY <= boardConfig.height; positionY++) {
@@ -20,4 +20,8 @@ export const createBoardSquares = (boardConfig: IBoardConfiguration) => {
     }
   }
   return squares;
+};
+
+export const BoardUtils = {
+  createBoardSquares
 };

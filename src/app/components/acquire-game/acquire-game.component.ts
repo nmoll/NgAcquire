@@ -1,11 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { BoardSquareFacade } from "../store/board/board-square.facade";
-import { PlayerFacade } from "../store/player/player.facade";
-import { TileFacade } from "../store/tile/tile.facade";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { BoardSquareFacade } from "src/app/store/board/board-square.facade";
+import { PlayerFacade } from "src/app/store/player/player.facade";
+import { TileFacade } from "src/app/store/tile/tile.facade";
 
 @Component({
   selector: "acquire-game",
-  templateUrl: "./acquire-game.component.html"
+  templateUrl: "./acquire-game.component.html",
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AcquireGameComponent implements OnInit {
   constructor(

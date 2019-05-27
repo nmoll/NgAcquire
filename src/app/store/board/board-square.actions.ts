@@ -1,6 +1,6 @@
 import { Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
-import { IBoardSquare } from "src/app/board/board-square";
+import { IBoardSquare } from "src/app/models/board-square";
 
 export const BoardSquareActions = {
   setBoardSquares: createAction(

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { BoardSquareFacade } from "../store/board/board-square.facade";
-import { PlayerActionMenuFacade } from "../store/player-action-menu/player-action-menu.facade";
-import { PlayerActionMenuType } from "./player-action-menu-type";
+import { BoardSquareFacade } from "src/app/store/board/board-square.facade";
+import { PlayerActionMenuFacade } from "src/app/store/player-action-menu/player-action-menu.facade";
+import { PlayerActionMenuType } from "../../models/player-action-menu-type";
 
 @Component({
   selector: "acquire-player-action-menu",

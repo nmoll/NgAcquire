@@ -5,7 +5,7 @@ import {
   Input,
   Output
 } from "@angular/core";
-import { IBoardSquare } from "./board-square";
+import { IBoardSquare } from "../../models/board-square";
 
 @Component({
   selector: "acquire-board-square",

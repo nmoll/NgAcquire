@@ -1,4 +1,4 @@
-import { PlayerActionMenuType } from "src/app/player-action-menu/player-action-menu-type";
+import { PlayerActionMenuType } from "src/app/models/player-action-menu-type";
 
 export interface PlayerActionMenuState {
   activeMenuType: PlayerActionMenuType;

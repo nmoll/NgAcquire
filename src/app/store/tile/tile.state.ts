@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityState } from "@ngrx/entity";
-import { ITile } from "src/app/tile/tile";
+import { ITile } from "src/app/models/tile";
 
 export interface TileState extends EntityState<ITile> {}
 

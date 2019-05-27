@@ -1,7 +1,7 @@
-import { IBoardConfiguration } from "../board/board-configuration";
-import { ITile } from "./tile";
+import { IBoardConfig } from "../config/board-config";
+import { ITile } from "../models/tile";
 
-export const createTiles = (boardConfig: IBoardConfiguration): ITile[] => {
+const createTiles = (boardConfig: IBoardConfig): ITile[] => {
   const tiles: ITile[] = [];
   var boardSquareId = 1;
   for (var positionY = 1; positionY <= boardConfig.height; positionY++) {
@@ -14,10 +14,7 @@ export const createTiles = (boardConfig: IBoardConfiguration): ITile[] => {
   return tiles;
 };
 
-export const pickRandomTiles = (
-  numberOfTiles: number,
-  tiles: ITile[]
-): ITile[] => {
+const pickRandomTiles = (numberOfTiles: number, tiles: ITile[]): ITile[] => {
   const availableTiles = [...tiles];
   const result = [];
   for (let i = 0; i < numberOfTiles; i++) {
@@ -26,4 +23,9 @@ export const pickRandomTiles = (
     result.push(tile);
   }
   return result;
+};
+
+export const TileUtils = {
+  createTiles,
+  pickRandomTiles
 };
