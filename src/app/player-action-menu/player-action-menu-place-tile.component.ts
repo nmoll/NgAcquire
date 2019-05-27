@@ -4,7 +4,6 @@ import { IBoardSquare } from "../board/board-square";
 @Component({
   selector: "acquire-player-action-menu-place-tile",
   template: `
-    <div>Place tile</div>
     <button [disabled]="!selectedBoardSquare" (click)="onConfirm()">
       Confirm Placement
     </button>
