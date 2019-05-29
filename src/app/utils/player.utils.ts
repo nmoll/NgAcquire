@@ -1,4 +1,18 @@
+import { DefaultPlayerConfig } from "../config/player-config";
 import { IPlayer } from "../models/player";
+import { ITile } from "../models/tile";
+import { TileUtils } from "./tile.utils";
+
+const initPlayerTiles = (players: IPlayer[], tiles: ITile[]): IPlayer[] => {
+  const randomTiles = TileUtils.pickRandomTiles(
+    players.length * DefaultPlayerConfig.maxTilesInHand,
+    tiles
+  );
+  return players.map(player => ({
+    ...player,
+    tiles: randomTiles.splice(0, DefaultPlayerConfig.maxTilesInHand)
+  }));
+};
 
 const playerHasTile = (player: IPlayer, boardSquareId: number) =>
   !!player.tiles.find(tile => tile.boardSquareId === boardSquareId);
@@ -9,6 +23,7 @@ const getNextPlayer = (player: IPlayer, players: IPlayer[]) => {
 };
 
 export const PlayerUtils = {
+  initPlayerTiles,
   playerHasTile,
   getNextPlayer
 };

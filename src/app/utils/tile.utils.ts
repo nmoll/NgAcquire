@@ -25,7 +25,12 @@ const pickRandomTiles = (numberOfTiles: number, tiles: ITile[]): ITile[] => {
   return result;
 };
 
+const removeTileById = (tiles: ITile[], boardSquareId: number): ITile[] => [
+  ...tiles.filter(tile => tile.boardSquareId !== boardSquareId)
+];
+
 export const TileUtils = {
   createTiles,
-  pickRandomTiles
+  pickRandomTiles,
+  removeTileById
 };

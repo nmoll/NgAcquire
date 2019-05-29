@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { delay, filter, map, withLatestFrom } from "rxjs/operators";
-import { PlayerType } from "src/app/models/player";
+import { map } from "rxjs/operators";
 import { PlayerActionMenuType } from "src/app/models/player-action-menu-type";
-import { BoardUtils } from "src/app/utils/board.utils";
-import { BoardSquareFacade } from "../board/board-square.facade";
-import { PlayerActions } from "../player/player.actions";
+import {
+  ComputerPlayerActions,
+  HumanPlayerActions
+} from "../player/player.actions";
 import { PlayerFacade } from "../player/player.facade";
 import { PlayerActionMenuActions } from "./player-action-menu.actions";
 
@@ -13,17 +13,11 @@ import { PlayerActionMenuActions } from "./player-action-menu.actions";
   providedIn: "root"
 })
 export class PlayerActionMenuEffects {
-  constructor(
-    private actions$: Actions,
-    private playerFacade: PlayerFacade,
-    private boardSquareFacade: BoardSquareFacade
-  ) {}
+  constructor(private actions$: Actions, private playerFacade: PlayerFacade) {}
 
   tilePlaced$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PlayerActions.confirmTilePlacement),
-      withLatestFrom(this.playerFacade.currentPlayer$),
-      filter(([_, player]) => player.playerType === PlayerType.HUMAN),
+      ofType(HumanPlayerActions.confirmTilePlacement),
       map(_ =>
         PlayerActionMenuActions.setActiveMenuType({
           activeMenuType: PlayerActionMenuType.END_TURN
@@ -32,49 +26,25 @@ export class PlayerActionMenuEffects {
     )
   );
 
-  tilePlacedByComputer = createEffect(() =>
+  onTurnStart$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(PlayerActions.confirmTilePlacement),
-      withLatestFrom(this.playerFacade.currentPlayer$),
-      filter(([_, player]) => player.playerType === PlayerType.COMPUTER),
-      map(_ => PlayerActions.endTurn()),
-      delay(1000)
-    )
-  );
-
-  playerChanged$ = createEffect(() =>
-    this.playerFacade.currentPlayerChanged$.pipe(
-      map(player =>
+      ofType(HumanPlayerActions.turnStarted),
+      map(_ =>
         PlayerActionMenuActions.setActiveMenuType({
-          activeMenuType:
-            player.playerType === PlayerType.HUMAN
-              ? PlayerActionMenuType.PLACE_TILE
-              : PlayerActionMenuType.COMPUTER_MOVING
+          activeMenuType: PlayerActionMenuType.PLACE_TILE
         })
       )
     )
   );
 
-  computerMove$ = createEffect(() =>
+  onComputerTurnStart = createEffect(() =>
     this.actions$.pipe(
-      ofType(PlayerActionMenuActions.setActiveMenuType),
-      filter(
-        ({ activeMenuType }) =>
-          activeMenuType === PlayerActionMenuType.COMPUTER_MOVING
-      ),
-      withLatestFrom(
-        this.playerFacade.currentPlayer$,
-        this.boardSquareFacade.boardSquares$
-      ),
-      map(([_, player, boardSquares]) =>
-        PlayerActions.confirmTilePlacement({
-          boardSquare: BoardUtils.findById(
-            player.tiles[0].boardSquareId,
-            boardSquares
-          )
+      ofType(ComputerPlayerActions.turnStarted),
+      map(_ =>
+        PlayerActionMenuActions.setActiveMenuType({
+          activeMenuType: PlayerActionMenuType.COMPUTER_MOVING
         })
-      ),
-      delay(1000)
+      )
     )
   );
 }

@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { distinctUntilChanged, filter } from "rxjs/operators";
 import { IBoardSquare } from "src/app/models/board-square";
 import { IPlayer } from "src/app/models/player";
-import { PlayerActions } from "../player/player.actions";
+import { HumanPlayerActions, PlayerActions } from "../player/player.actions";
 import { PlayerSelectors } from "../player/player.selectors";
 import { PlayerState } from "../player/player.state";
 
@@ -40,10 +40,12 @@ export class PlayerFacade {
   }
 
   public confirmTilePlacement(boardSquare: IBoardSquare): void {
-    this.store.dispatch(PlayerActions.confirmTilePlacement({ boardSquare }));
+    this.store.dispatch(
+      HumanPlayerActions.confirmTilePlacement({ boardSquare })
+    );
   }
 
   public endTurn(): void {
-    this.store.dispatch(PlayerActions.endTurn());
+    this.store.dispatch(HumanPlayerActions.endTurn());
   }
 }

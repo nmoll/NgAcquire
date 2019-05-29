@@ -4,10 +4,10 @@ import { IBoardSquare } from "src/app/models/board-square";
 import { IPlayer } from "src/app/models/player";
 
 export const PlayerActions = {
-  loadPlayers: createAction("[Init] Load Players"),
+  loadPlayers: createAction("[Players] Load Players"),
 
   loadPlayersSuccess: createAction(
-    "[Init] Load Players Success",
+    "[Players] Load Players Success",
     props<{ players: IPlayer[] }>()
   ),
 
@@ -19,12 +19,27 @@ export const PlayerActions = {
   updatePlayer: createAction(
     "[Players] Update Player",
     props<{ update: Update<IPlayer> }>()
-  ),
+  )
+};
+
+export const HumanPlayerActions = {
+  turnStarted: createAction("[Human Player] Turn Started"),
 
   confirmTilePlacement: createAction(
-    "[Player Action Menu] Confirm Tile Placement",
+    "[Human Player] Confirm Tile Placement",
     props<{ boardSquare: IBoardSquare }>()
   ),
 
-  endTurn: createAction("[Player Action Menu] End Turn")
+  endTurn: createAction("[Human Player] End Turn")
+};
+
+export const ComputerPlayerActions = {
+  turnStarted: createAction("[Computer Player] Turn Started"),
+
+  confirmTilePlacement: createAction(
+    "[Computer Player] Confirm Tile Placement",
+    props<{ boardSquare: IBoardSquare }>()
+  ),
+
+  endTurn: createAction("[Computer Player] End Turn")
 };
