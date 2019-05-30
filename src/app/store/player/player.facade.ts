@@ -45,6 +45,12 @@ export class PlayerFacade {
     );
   }
 
+  public starterHotelChainChosen(hotelChain: any): void {
+    this.store.dispatch(
+      HumanPlayerActions.starterHotelChainChosen({ hotelChain })
+    );
+  }
+
   public endTurn(): void {
     this.store.dispatch(HumanPlayerActions.endTurn());
   }

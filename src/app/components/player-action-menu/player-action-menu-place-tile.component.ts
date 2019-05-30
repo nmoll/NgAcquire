@@ -10,7 +10,11 @@ import { IBoardSquare } from "../../models/board-square";
 @Component({
   selector: "acquire-player-action-menu-place-tile",
   template: `
-    <button [disabled]="!selectedBoardSquare" (click)="onConfirm()">
+    <button
+      [disabled]="!selectedBoardSquare"
+      (click)="onConfirm()"
+      class="acquire-button w-full"
+    >
       Confirm Placement
     </button>
   `,

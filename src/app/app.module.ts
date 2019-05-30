@@ -10,6 +10,7 @@ import { BoardComponent } from "./components/board/board.component";
 import { PlayerActionMenuComputerMovingComponent } from "./components/player-action-menu/player-action-menu-computer-moving.component";
 import { PlayerActionMenuEndTurn } from "./components/player-action-menu/player-action-menu-end-turn.component";
 import { PlayerActionMenuPlaceTileComponent } from "./components/player-action-menu/player-action-menu-place-tile.component";
+import { PlayerActionMenuStartHotelChainComponent } from "./components/player-action-menu/player-action-menu-start-hotel-chain.component";
 import { PlayerActionMenuComponent } from "./components/player-action-menu/player-action-menu.component";
 import { PlayerDeckComponent } from "./components/player-deck/player-deck.component";
 import { reducers } from "./store";
@@ -26,6 +27,7 @@ import { PlayerEffects } from "./store/player/player.effects";
     PlayerActionMenuComponent,
     PlayerActionMenuPlaceTileComponent,
     PlayerActionMenuComputerMovingComponent,
+    PlayerActionMenuStartHotelChainComponent,
     PlayerActionMenuEndTurn,
     BoardSquareComponent
   ],

@@ -8,7 +8,9 @@ import {
 @Component({
   selector: "acquire-player-action-menu-end-turn",
   template: `
-    <button (click)="endTurn.emit()">End Turn</button>
+    <button (click)="endTurn.emit()" class="acquire-button w-full">
+      End Turn
+    </button>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

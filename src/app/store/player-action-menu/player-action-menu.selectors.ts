@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { PlayerActionMenuUtils } from "src/app/utils/player-action-menu.utils";
 import { PlayerActionMenuState } from "./player-action-menu.state";
 
 const getPlayerActionMenuState = createFeatureSelector<PlayerActionMenuState>(
@@ -7,7 +8,7 @@ const getPlayerActionMenuState = createFeatureSelector<PlayerActionMenuState>(
 
 const getActiveMenuType = createSelector(
   getPlayerActionMenuState,
-  state => state.activeMenuType
+  state => PlayerActionMenuUtils.findByHighestPriority(state.queuedMenuActions)
 );
 
 export const PlayerActionMenuSelectors = {

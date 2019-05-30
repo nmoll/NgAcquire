@@ -62,9 +62,16 @@ const getAdjacentBoardSquares = (
     )
   ].filter(boardSquare => !!boardSquare);
 
+const hasAdjacentTile = (
+  boardSquare: IBoardSquare,
+  boardSquares: IBoardSquare[]
+): boolean =>
+  !!getAdjacentBoardSquares(boardSquare, boardSquares).find(
+    boardSquare => !!boardSquare.tile
+  );
+
 export const BoardUtils = {
   createBoardSquares,
   findById,
-  getBoardSquareAtPosition,
-  getAdjacentBoardSquares
+  hasAdjacentTile
 };

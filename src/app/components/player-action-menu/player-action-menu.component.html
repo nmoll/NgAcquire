@@ -12,6 +12,12 @@
         (confirm)="playerFacade.confirmTilePlacement($event)"
       ></acquire-player-action-menu-place-tile>
 
+      <acquire-player-action-menu-start-hotel-chain
+        *ngSwitchCase="actionMenuType.START_HOTEL_CHAIN"
+        (hotelSelected)="playerFacade.starterHotelChainChosen($event)"
+      >
+      </acquire-player-action-menu-start-hotel-chain>
+
       <acquire-player-action-menu-end-turn
         *ngSwitchCase="actionMenuType.END_TURN"
         (endTurn)="playerFacade.endTurn()"

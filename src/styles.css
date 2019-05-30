@@ -657,6 +657,30 @@ video {
    * @import "components/forms";
    */
 
+.acquire-button {
+  background-color: #4299e1;
+  color: #fff;
+  font-weight: 700;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.25rem;
+}
+
+.acquire-button:disabled {
+  background-color: #4299e1;
+  color: #fff;
+  font-weight: 700;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.25rem;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /**
    * This injects all of Tailwind's utility classes, generated based on your
    * config file.
