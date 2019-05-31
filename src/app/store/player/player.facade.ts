@@ -3,6 +3,7 @@ import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { distinctUntilChanged, filter } from "rxjs/operators";
 import { IBoardSquare } from "src/app/models/board-square";
+import { IHotelChain } from "src/app/models/hotel-chain";
 import { IPlayer } from "src/app/models/player";
 import { HumanPlayerActions, PlayerActions } from "../player/player.actions";
 import { PlayerSelectors } from "../player/player.selectors";
@@ -45,7 +46,7 @@ export class PlayerFacade {
     );
   }
 
-  public starterHotelChainChosen(hotelChain: any): void {
+  public starterHotelChainChosen(hotelChain: IHotelChain): void {
     this.store.dispatch(
       HumanPlayerActions.starterHotelChainChosen({ hotelChain })
     );

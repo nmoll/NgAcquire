@@ -17,6 +17,7 @@ import { reducers } from "./store";
 import { BoardSquareEffects } from "./store/board/board-square.effects";
 import { PlayerActionMenuEffects } from "./store/player-action-menu/player-action-menu.effects";
 import { PlayerEffects } from "./store/player/player.effects";
+import { TileEffects } from "./store/tile/tile.effects";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PlayerEffects } from "./store/player/player.effects";
     EffectsModule.forRoot([
       BoardSquareEffects,
       PlayerEffects,
-      PlayerActionMenuEffects
+      PlayerActionMenuEffects,
+      TileEffects
     ])
   ],
   providers: [],

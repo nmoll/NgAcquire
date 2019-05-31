@@ -14,6 +14,7 @@
 
       <acquire-player-action-menu-start-hotel-chain
         *ngSwitchCase="actionMenuType.START_HOTEL_CHAIN"
+        [hotelChains]="hotelChainFacade.hotelChains$ | async"
         (hotelSelected)="playerFacade.starterHotelChainChosen($event)"
       >
       </acquire-player-action-menu-start-hotel-chain>

@@ -1,6 +1,7 @@
 import { Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
 import { IBoardSquare } from "src/app/models/board-square";
+import { IHotelChain } from "src/app/models/hotel-chain";
 import { IPlayer } from "src/app/models/player";
 
 export const PlayerActions = {
@@ -34,7 +35,7 @@ export const HumanPlayerActions = {
 
   starterHotelChainChosen: createAction(
     "[Human Player] Starter Hotel Chain Chosen",
-    props<{ hotelChain: any }>()
+    props<{ hotelChain: IHotelChain }>()
   ),
 
   endTurn: createAction("[Human Player] End Turn")
@@ -52,7 +53,7 @@ export const ComputerPlayerActions = {
 
   starterHotelChainChosen: createAction(
     "[Computer Player] Starter Hotel Chain Chosen",
-    props<{ hotelChain: any }>()
+    props<{ hotelChain: IHotelChain }>()
   ),
 
   endTurn: createAction("[Computer Player] End Turn")

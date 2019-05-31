@@ -7,7 +7,8 @@ const createTiles = (boardConfig: IBoardConfig): ITile[] => {
   for (var positionY = 1; positionY <= boardConfig.height; positionY++) {
     for (var positionX = 1; positionX <= boardConfig.width; positionX++) {
       tiles.push({
-        boardSquareId: boardSquareId++
+        boardSquareId: boardSquareId++,
+        hotelChain: null
       });
     }
   }
