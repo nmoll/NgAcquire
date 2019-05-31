@@ -20,8 +20,21 @@ const getAvailableTiles = createSelector(
     )
 );
 
+const getLastPlayedTileId = createSelector(
+  getTileState,
+  state => state.lastPlayedTileId
+);
+
+const getLastPlayedTile = createSelector(
+  selectEntities,
+  getLastPlayedTileId,
+  (entities, lastPlayedTileId) =>
+    lastPlayedTileId ? entities[lastPlayedTileId] : null
+);
+
 export const TileSelectors = {
   getAllTiles: selectAll,
   getTileById,
-  getAvailableTiles
+  getAvailableTiles,
+  getLastPlayedTile
 };

@@ -14,8 +14,13 @@ import { TileState } from "./tile.state";
 export class TileFacade {
   public tilesInBag$: Observable<ITile[]>;
 
+  public lastPlayedTile$: Observable<ITile>;
+
   constructor(private store: Store<TileState>) {
     this.tilesInBag$ = this.store.pipe(select(TileSelectors.getAvailableTiles));
+    this.lastPlayedTile$ = this.store.pipe(
+      select(TileSelectors.getLastPlayedTile)
+    );
   }
 
   public getTileById(boardSquareId: number): Observable<ITile> {
