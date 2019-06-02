@@ -14,7 +14,6 @@ import { PlayerActionMenuStartHotelChainComponent } from "./components/player-ac
 import { PlayerActionMenuComponent } from "./components/player-action-menu/player-action-menu.component";
 import { PlayerDeckComponent } from "./components/player-deck/player-deck.component";
 import { reducers } from "./store";
-import { BoardSquareEffects } from "./store/board/board-square.effects";
 import { PlayerActionMenuEffects } from "./store/player-action-menu/player-action-menu.effects";
 import { PlayerEffects } from "./store/player/player.effects";
 import { TileEffects } from "./store/tile/tile.effects";
@@ -36,12 +35,7 @@ import { TileEffects } from "./store/tile/tile.effects";
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([
-      BoardSquareEffects,
-      PlayerEffects,
-      PlayerActionMenuEffects,
-      TileEffects
-    ])
+    EffectsModule.forRoot([PlayerEffects, PlayerActionMenuEffects, TileEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

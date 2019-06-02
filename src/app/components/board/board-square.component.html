@@ -1,12 +1,12 @@
 <div
   class="flex h-full justify-center items-center border border-solid"
-  [class.border-gray-700]="!enabled && !selected && !boardSquare.tile"
-  [class.text-gray-600]="!selected && !boardSquare.tile"
+  [class.border-gray-700]="!enabled && !selected && !tile"
+  [class.text-gray-600]="!selected && !tile"
   [class.border-green-300]="enabled"
   [class.bg-green-300]="selected"
-  [class.text-gray-900]="selected || !!boardSquare.tile"
-  [class.border-gray-500]="!!boardSquare.tile"
-  [class.bg-gray-500]="!!boardSquare.tile"
+  [class.text-gray-900]="selected || !!tile"
+  [class.border-gray-500]="!!tile"
+  [class.bg-gray-500]="!!tile"
   (click)="enabled && select.emit(boardSquare)"
 >
   {{ boardSquare.display }}

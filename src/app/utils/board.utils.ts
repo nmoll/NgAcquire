@@ -1,5 +1,6 @@
 import { IBoardConfig } from "../config/board-config";
 import { IBoardSquare } from "../models/board-square";
+import { ITile } from "../models/tile";
 
 /**
  * Generates the board squares based off the board dimensions
@@ -14,8 +15,7 @@ const createBoardSquares = (boardConfig: IBoardConfig) => {
         id: id++,
         positionX,
         positionY,
-        display,
-        tile: null
+        display
       });
     }
   }
@@ -62,12 +62,16 @@ const getAdjacentBoardSquares = (
     )
   ].filter(boardSquare => !!boardSquare);
 
+const hasTile = (boardSquare: IBoardSquare, playedTiles: ITile[]) =>
+  !!playedTiles.find(tile => tile.boardSquareId === boardSquare.id);
+
 const hasAdjacentTile = (
   boardSquare: IBoardSquare,
-  boardSquares: IBoardSquare[]
+  boardSquares: IBoardSquare[],
+  playedTiles: ITile[]
 ): boolean =>
-  !!getAdjacentBoardSquares(boardSquare, boardSquares).find(
-    boardSquare => !!boardSquare.tile
+  !!getAdjacentBoardSquares(boardSquare, boardSquares).find(boardSquare =>
+    hasTile(boardSquare, playedTiles)
   );
 
 export const BoardUtils = {

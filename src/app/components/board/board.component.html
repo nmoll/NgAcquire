@@ -5,6 +5,7 @@
   >
     <acquire-board-square
       [boardSquare]="boardSquare"
+      [tile]="getPlayedTile(boardSquare) | async"
       [selected]="isSelected(boardSquare) | async"
       [enabled]="isEnabled(boardSquare) | async"
       (select)="onSelect($event)"

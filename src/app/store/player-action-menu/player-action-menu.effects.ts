@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { filter, map, withLatestFrom } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { PlayerActionMenuType } from "src/app/models/player-action-menu-type";
-import { BoardUtils } from "src/app/utils/board.utils";
 import { BoardSquareFacade } from "../board/board-square.facade";
 import {
   ComputerPlayerActions,
@@ -31,21 +30,23 @@ export class PlayerActionMenuEffects {
     )
   );
 
-  showChooseHotelChainToStartMenu$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(HumanPlayerActions.confirmTilePlacement),
-      withLatestFrom(this.boardSquareFacade.boardSquares$),
-      filter(([{ boardSquare }, boardSquares]) =>
-        BoardUtils.hasAdjacentTile(boardSquare, boardSquares)
-      ),
-      map(_ =>
-        PlayerActionMenuActions.updateActionMenuQueue({
-          add: PlayerActionMenuType.START_HOTEL_CHAIN,
-          removeCurrent: false
-        })
-      )
-    )
-  );
+  // showChooseHotelChainToStartMenu$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(HumanPlayerActions.confirmTilePlacement),
+  //     tap(({ boardSquare }) => console.log("placed", boardSquare)),
+  //     withLatestFrom(this.boardSquareFacade.boardSquares$),
+  //     filter(([{ boardSquare }, boardSquares]) =>
+  //       BoardUtils.hasAdjacentTile(boardSquare, boardSquares)
+  //     ),
+  //     tap(() => console.log("has adjacent tiles")),
+  //     map(_ =>
+  //       PlayerActionMenuActions.updateActionMenuQueue({
+  //         add: PlayerActionMenuType.START_HOTEL_CHAIN,
+  //         removeCurrent: false
+  //       })
+  //     )
+  //   )
+  // );
 
   removeChooseHotelChainToStartMenu$ = createEffect(() =>
     this.actions$.pipe(

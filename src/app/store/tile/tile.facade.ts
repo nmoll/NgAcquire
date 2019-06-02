@@ -23,9 +23,11 @@ export class TileFacade {
     );
   }
 
-  public getTileById(boardSquareId: number): Observable<ITile> {
+  public getPlayedTileByBoardSquareId(
+    boardSquareId: number
+  ): Observable<ITile> {
     return this.store.pipe(
-      select(TileSelectors.getTileById, { id: boardSquareId })
+      select(TileSelectors.getPlayedTileByBoardSquareId, { boardSquareId })
     );
   }
 

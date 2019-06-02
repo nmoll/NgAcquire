@@ -21,7 +21,7 @@ describe("PlayerActionMenuReducer", () => {
       expect(playerActionMenuReducer(initialState, action)).toEqual(expected);
     });
 
-    fit("should add a menu to the queue and keep the current menu if removeCurrent is false", () => {
+    it("should add a menu to the queue and keep the current menu if removeCurrent is false", () => {
       const state: PlayerActionMenuState = {
         queuedMenuActions: [PlayerActionMenuType.END_TURN]
       };

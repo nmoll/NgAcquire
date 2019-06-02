@@ -5,6 +5,7 @@ import {
   Input,
   Output
 } from "@angular/core";
+import { ITile } from "src/app/models/tile";
 import { IBoardSquare } from "../../models/board-square";
 
 @Component({
@@ -15,6 +16,9 @@ import { IBoardSquare } from "../../models/board-square";
 export class BoardSquareComponent {
   @Input()
   public boardSquare: IBoardSquare;
+
+  @Input()
+  public tile: ITile;
 
   @Input()
   public selected: boolean;

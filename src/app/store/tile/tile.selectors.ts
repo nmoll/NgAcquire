@@ -6,35 +6,42 @@ const getTileState = createFeatureSelector<TileState>("tileState");
 
 const { selectEntities, selectAll } = tileAdapter.getSelectors(getTileState);
 
-const getTileById = createSelector(
+const getPlayedTiles = createSelector(
+  getTileState,
   selectEntities,
-  (entities, props: { id: number }) => entities[props.id]
+  (state, entities) =>
+    state.playedTileIds.map(boardSquareId => entities[boardSquareId])
+);
+
+const getPlayedTileByBoardSquareId = createSelector(
+  getPlayedTiles,
+  (playedTiles, props: { boardSquareId: number }) =>
+    playedTiles.find(t => t.boardSquareId === props.boardSquareId)
 );
 
 const getAvailableTiles = createSelector(
+  getTileState,
   selectAll,
   PlayerSelectors.getAllPlayerTiles,
-  (tiles, playerTiles) =>
+  (state, tiles, playerTiles) =>
     tiles.filter(
-      tile => !playerTiles.find(t => t.boardSquareId === tile.boardSquareId)
+      tile =>
+        state.playedTileIds.indexOf(tile.boardSquareId) === -1 &&
+        !playerTiles.find(t => t.boardSquareId === tile.boardSquareId)
     )
 );
 
-const getLastPlayedTileId = createSelector(
-  getTileState,
-  state => state.lastPlayedTileId
-);
-
 const getLastPlayedTile = createSelector(
+  getTileState,
   selectEntities,
-  getLastPlayedTileId,
-  (entities, lastPlayedTileId) =>
-    lastPlayedTileId ? entities[lastPlayedTileId] : null
+  (state, entities) =>
+    state.lastPlayedTileId ? entities[state.lastPlayedTileId] : null
 );
 
 export const TileSelectors = {
   getAllTiles: selectAll,
-  getTileById,
+  getPlayedTiles,
+  getPlayedTileByBoardSquareId,
   getAvailableTiles,
   getLastPlayedTile
 };
