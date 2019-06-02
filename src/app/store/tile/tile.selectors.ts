@@ -9,14 +9,15 @@ const { selectEntities, selectAll } = tileAdapter.getSelectors(getTileState);
 const getPlayedTiles = createSelector(
   getTileState,
   selectEntities,
-  (state, entities) =>
-    state.playedTileIds.map(boardSquareId => entities[boardSquareId])
+  (state, entities) => state.playedTileIds.map(id => entities[id])
 );
 
-const getPlayedTileByBoardSquareId = createSelector(
+const getPlayedTileAtPosition = createSelector(
   getPlayedTiles,
-  (playedTiles, props: { boardSquareId: number }) =>
-    playedTiles.find(t => t.boardSquareId === props.boardSquareId)
+  (playedTiles, props: { positionX: number; positionY: number }) =>
+    playedTiles.find(
+      t => t.positionX === props.positionX && t.positionY === props.positionY
+    )
 );
 
 const getAvailableTiles = createSelector(
@@ -26,8 +27,8 @@ const getAvailableTiles = createSelector(
   (state, tiles, playerTiles) =>
     tiles.filter(
       tile =>
-        state.playedTileIds.indexOf(tile.boardSquareId) === -1 &&
-        !playerTiles.find(t => t.boardSquareId === tile.boardSquareId)
+        state.playedTileIds.indexOf(tile.id) === -1 &&
+        !playerTiles.find(t => t.id === tile.id)
     )
 );
 
@@ -38,10 +39,36 @@ const getLastPlayedTile = createSelector(
     state.lastPlayedTileId ? entities[state.lastPlayedTileId] : null
 );
 
+const getAdjacentTilesToLastPlayedTile = createSelector(
+  getPlayedTiles,
+  getLastPlayedTile,
+  (tiles, tile) =>
+    [
+      tiles.find(
+        t =>
+          t.positionX === tile.positionX + 1 && t.positionY === tile.positionY
+      ),
+      tiles.find(
+        t =>
+          t.positionX === tile.positionX && t.positionY === tile.positionY + 1
+      ),
+      ,
+      tiles.find(
+        t =>
+          t.positionX === tile.positionX - 1 && t.positionY === tile.positionY
+      ),
+      tiles.find(
+        t =>
+          t.positionX === tile.positionX && t.positionY === tile.positionY - 1
+      )
+    ].filter(tile => !!tile)
+);
+
 export const TileSelectors = {
   getAllTiles: selectAll,
   getPlayedTiles,
-  getPlayedTileByBoardSquareId,
+  getPlayedTileAtPosition,
   getAvailableTiles,
-  getLastPlayedTile
+  getLastPlayedTile,
+  getAdjacentTilesToLastPlayedTile
 };

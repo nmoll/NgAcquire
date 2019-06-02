@@ -18,6 +18,7 @@ export const tileReducer = createReducer(
     ComputerPlayerActions.confirmTilePlacement,
     (state, { boardSquare }) => ({
       ...state,
+      lastPlayedTileId: boardSquare.id,
       playedTileIds: [...state.playedTileIds, boardSquare.id]
     })
   )

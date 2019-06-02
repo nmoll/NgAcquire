@@ -24,7 +24,10 @@ export class BoardComponent {
   }
 
   public getPlayedTile(boardSquare: IBoardSquare): Observable<ITile> {
-    return this.tileFacade.getPlayedTileByBoardSquareId(boardSquare.id);
+    return this.tileFacade.getPlayedTileAtPosition(
+      boardSquare.positionX,
+      boardSquare.positionY
+    );
   }
 
   public onSelect(boardSquare: IBoardSquare): void {

@@ -16,18 +16,24 @@ export class TileFacade {
 
   public lastPlayedTile$: Observable<ITile>;
 
+  public adjacentTilesToLastPlayedTile$: Observable<ITile[]>;
+
   constructor(private store: Store<TileState>) {
     this.tilesInBag$ = this.store.pipe(select(TileSelectors.getAvailableTiles));
     this.lastPlayedTile$ = this.store.pipe(
       select(TileSelectors.getLastPlayedTile)
     );
+    this.adjacentTilesToLastPlayedTile$ = this.store.pipe(
+      select(TileSelectors.getAdjacentTilesToLastPlayedTile)
+    );
   }
 
-  public getPlayedTileByBoardSquareId(
-    boardSquareId: number
+  public getPlayedTileAtPosition(
+    positionX: number,
+    positionY: number
   ): Observable<ITile> {
     return this.store.pipe(
-      select(TileSelectors.getPlayedTileByBoardSquareId, { boardSquareId })
+      select(TileSelectors.getPlayedTileAtPosition, { positionX, positionY })
     );
   }
 

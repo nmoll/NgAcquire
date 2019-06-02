@@ -6,9 +6,7 @@ export interface TileState extends EntityState<ITile> {
   lastPlayedTileId: number | null;
 }
 
-export const tileAdapter = createEntityAdapter<ITile>({
-  selectId: state => state.boardSquareId
-});
+export const tileAdapter = createEntityAdapter<ITile>();
 
 export const initialState: TileState = tileAdapter.getInitialState({
   playedTileIds: [],

@@ -1,22 +1,19 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { map } from "rxjs/operators";
+import { filter, map, withLatestFrom } from "rxjs/operators";
 import { PlayerActionMenuType } from "src/app/models/player-action-menu-type";
-import { BoardSquareFacade } from "../board/board-square.facade";
 import {
   ComputerPlayerActions,
   HumanPlayerActions
 } from "../player/player.actions";
+import { TileFacade } from "../tile/tile.facade";
 import { PlayerActionMenuActions } from "./player-action-menu.actions";
 
 @Injectable({
   providedIn: "root"
 })
 export class PlayerActionMenuEffects {
-  constructor(
-    private actions$: Actions,
-    private boardSquareFacade: BoardSquareFacade
-  ) {}
+  constructor(private actions$: Actions, private tileFacade: TileFacade) {}
 
   showEndTurnMenu$ = createEffect(() =>
     this.actions$.pipe(
@@ -30,23 +27,19 @@ export class PlayerActionMenuEffects {
     )
   );
 
-  // showChooseHotelChainToStartMenu$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(HumanPlayerActions.confirmTilePlacement),
-  //     tap(({ boardSquare }) => console.log("placed", boardSquare)),
-  //     withLatestFrom(this.boardSquareFacade.boardSquares$),
-  //     filter(([{ boardSquare }, boardSquares]) =>
-  //       BoardUtils.hasAdjacentTile(boardSquare, boardSquares)
-  //     ),
-  //     tap(() => console.log("has adjacent tiles")),
-  //     map(_ =>
-  //       PlayerActionMenuActions.updateActionMenuQueue({
-  //         add: PlayerActionMenuType.START_HOTEL_CHAIN,
-  //         removeCurrent: false
-  //       })
-  //     )
-  //   )
-  // );
+  showChooseHotelChainToStartMenu$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(HumanPlayerActions.confirmTilePlacement),
+      withLatestFrom(this.tileFacade.adjacentTilesToLastPlayedTile$),
+      filter(([_, tiles]) => tiles.length > 0),
+      map(_ =>
+        PlayerActionMenuActions.updateActionMenuQueue({
+          add: PlayerActionMenuType.START_HOTEL_CHAIN,
+          removeCurrent: false
+        })
+      )
+    )
+  );
 
   removeChooseHotelChainToStartMenu$ = createEffect(() =>
     this.actions$.pipe(

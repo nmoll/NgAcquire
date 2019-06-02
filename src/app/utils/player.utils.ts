@@ -14,8 +14,8 @@ const initPlayerTiles = (players: IPlayer[], tiles: ITile[]): IPlayer[] => {
   }));
 };
 
-const playerHasTile = (player: IPlayer, boardSquareId: number) =>
-  !!player.tiles.find(tile => tile.boardSquareId === boardSquareId);
+const playerHasTile = (player: IPlayer, id: number) =>
+  !!player.tiles.find(tile => tile.id === id);
 
 const getNextPlayer = (player: IPlayer, players: IPlayer[]) => {
   const idx = players.indexOf(player);

@@ -22,8 +22,15 @@ const createBoardSquares = (boardConfig: IBoardConfig) => {
   return squares;
 };
 
-const findById = (id: number, boardSquares: IBoardSquare[]): IBoardSquare =>
-  boardSquares.find(boardSquare => boardSquare.id === id);
+const findByPosition = (
+  positionX: number,
+  positionY: number,
+  boardSquares: IBoardSquare[]
+): IBoardSquare =>
+  boardSquares.find(
+    boardSquare =>
+      boardSquare.positionX === positionX && boardSquare.positionY === positionY
+  );
 
 const getBoardSquareAtPosition = (
   positionX: number,
@@ -63,7 +70,11 @@ const getAdjacentBoardSquares = (
   ].filter(boardSquare => !!boardSquare);
 
 const hasTile = (boardSquare: IBoardSquare, playedTiles: ITile[]) =>
-  !!playedTiles.find(tile => tile.boardSquareId === boardSquare.id);
+  !!playedTiles.find(
+    tile =>
+      tile.positionX === boardSquare.positionX &&
+      tile.positionY === boardSquare.positionY
+  );
 
 const hasAdjacentTile = (
   boardSquare: IBoardSquare,
@@ -76,6 +87,6 @@ const hasAdjacentTile = (
 
 export const BoardUtils = {
   createBoardSquares,
-  findById,
+  findByPosition,
   hasAdjacentTile
 };

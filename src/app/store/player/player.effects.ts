@@ -92,8 +92,9 @@ export class PlayerEffects {
       ),
       map(([_, player, boardSquares]) =>
         ComputerPlayerActions.confirmTilePlacement({
-          boardSquare: BoardUtils.findById(
-            player.tiles[0].boardSquareId,
+          boardSquare: BoardUtils.findByPosition(
+            player.tiles[0].positionX,
+            player.tiles[0].positionY,
             boardSquares
           )
         })

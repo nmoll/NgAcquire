@@ -1,7 +1,9 @@
 import { IHotelChain } from "./hotel-chain";
 
 export interface ITile {
-  boardSquareId: number;
+  id: number;
+  positionX: number;
+  positionY: number;
 
   hotelChain: IHotelChain | null;
 }

@@ -3,11 +3,13 @@ import { ITile } from "../models/tile";
 
 const createTiles = (boardConfig: IBoardConfig): ITile[] => {
   const tiles: ITile[] = [];
-  var boardSquareId = 1;
+  var id = 1;
   for (var positionY = 1; positionY <= boardConfig.height; positionY++) {
     for (var positionX = 1; positionX <= boardConfig.width; positionX++) {
       tiles.push({
-        boardSquareId: boardSquareId++,
+        id: id++,
+        positionX,
+        positionY,
         hotelChain: null
       });
     }
@@ -26,8 +28,8 @@ const pickRandomTiles = (numberOfTiles: number, tiles: ITile[]): ITile[] => {
   return result;
 };
 
-const removeTileById = (tiles: ITile[], boardSquareId: number): ITile[] => [
-  ...tiles.filter(tile => tile.boardSquareId !== boardSquareId)
+const removeTileById = (tiles: ITile[], id: number): ITile[] => [
+  ...tiles.filter(tile => tile.id !== id)
 ];
 
 export const TileUtils = {
