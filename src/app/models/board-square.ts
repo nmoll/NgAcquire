@@ -1,3 +1,5 @@
+import { BoardSquareState } from "./board-square-state";
+
 /**
  * Board square
  */
@@ -8,17 +10,12 @@ export interface IBoardSquare {
   id: number;
 
   /**
-   * The horizontal position on the board
-   */
-  positionX: number;
-
-  /**
-   * The vertical position on the board
-   */
-  positionY: number;
-
-  /**
    * String used for display purposes
    */
   display: string;
+
+  /**
+   * Tile state of the board square
+   */
+  state: BoardSquareState;
 }

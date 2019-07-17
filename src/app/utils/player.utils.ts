@@ -1,21 +1,20 @@
 import { DefaultPlayerConfig } from "../config/player-config";
 import { IPlayer } from "../models/player";
-import { ITile } from "../models/tile";
 import { TileUtils } from "./tile.utils";
 
-const initPlayerTiles = (players: IPlayer[], tiles: ITile[]): IPlayer[] => {
+const initPlayerTiles = (players: IPlayer[], tileIds: number[]): IPlayer[] => {
   const randomTiles = TileUtils.pickRandomTiles(
     players.length * DefaultPlayerConfig.maxTilesInHand,
-    tiles
+    tileIds
   );
   return players.map(player => ({
     ...player,
-    tiles: randomTiles.splice(0, DefaultPlayerConfig.maxTilesInHand)
+    tileIds: randomTiles.splice(0, DefaultPlayerConfig.maxTilesInHand)
   }));
 };
 
 const playerHasTile = (player: IPlayer, id: number) =>
-  !!player.tiles.find(tile => tile.id === id);
+  !!player.tileIds.find(tileId => tileId === id);
 
 const getNextPlayer = (player: IPlayer, players: IPlayer[]) => {
   const idx = players.indexOf(player);

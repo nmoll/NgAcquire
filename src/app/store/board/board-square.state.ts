@@ -1,14 +1,20 @@
 import { createEntityAdapter, EntityState } from "@ngrx/entity";
 import { IBoardSquare } from "src/app/models/board-square";
 
-export interface BoardSquareState extends EntityState<IBoardSquare> {
+export interface IBoardSquareState extends EntityState<IBoardSquare> {
   selectedBoardSquareId: number | null;
+  lastTiledBoardSquareId: number | null;
+  tiledBoardSquareIds: number[];
 }
 
-export const boardSquareAdapter = createEntityAdapter<IBoardSquare>();
+export const boardSquareAdapter = createEntityAdapter<IBoardSquare>({
+  selectId: square => square.id
+});
 
-export const initialState: BoardSquareState = boardSquareAdapter.getInitialState(
+export const initialState: IBoardSquareState = boardSquareAdapter.getInitialState(
   {
-    selectedBoardSquareId: null
+    selectedBoardSquareId: null,
+    lastTiledBoardSquareId: null,
+    tiledBoardSquareIds: []
   }
 );

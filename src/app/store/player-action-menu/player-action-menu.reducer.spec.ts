@@ -3,7 +3,7 @@ import { PlayerActionMenuActions } from "./player-action-menu.actions";
 import { playerActionMenuReducer } from "./player-action-menu.reducer";
 import {
   initialState,
-  PlayerActionMenuState
+  IPlayerActionMenuState
 } from "./player-action-menu.state";
 
 describe("PlayerActionMenuReducer", () => {
@@ -14,7 +14,7 @@ describe("PlayerActionMenuReducer", () => {
         removeCurrent: false
       });
 
-      const expected: PlayerActionMenuState = {
+      const expected: IPlayerActionMenuState = {
         queuedMenuActions: [PlayerActionMenuType.PLACE_TILE]
       };
 
@@ -22,7 +22,7 @@ describe("PlayerActionMenuReducer", () => {
     });
 
     it("should add a menu to the queue and keep the current menu if removeCurrent is false", () => {
-      const state: PlayerActionMenuState = {
+      const state: IPlayerActionMenuState = {
         queuedMenuActions: [PlayerActionMenuType.END_TURN]
       };
 
@@ -31,7 +31,7 @@ describe("PlayerActionMenuReducer", () => {
         removeCurrent: false
       });
 
-      const expected: PlayerActionMenuState = {
+      const expected: IPlayerActionMenuState = {
         queuedMenuActions: [
           PlayerActionMenuType.END_TURN,
           PlayerActionMenuType.START_HOTEL_CHAIN
@@ -42,7 +42,7 @@ describe("PlayerActionMenuReducer", () => {
     });
 
     it("should add a menu to the queue and remove the current menu if removeCurrent is true", () => {
-      const state: PlayerActionMenuState = {
+      const state: IPlayerActionMenuState = {
         queuedMenuActions: [PlayerActionMenuType.PLACE_TILE]
       };
 
@@ -51,7 +51,7 @@ describe("PlayerActionMenuReducer", () => {
         removeCurrent: true
       });
 
-      const expected: PlayerActionMenuState = {
+      const expected: IPlayerActionMenuState = {
         queuedMenuActions: [PlayerActionMenuType.END_TURN]
       };
 
@@ -59,7 +59,7 @@ describe("PlayerActionMenuReducer", () => {
     });
 
     it("should remove the current menu", () => {
-      const state: PlayerActionMenuState = {
+      const state: IPlayerActionMenuState = {
         queuedMenuActions: [
           PlayerActionMenuType.END_TURN,
           PlayerActionMenuType.START_HOTEL_CHAIN
@@ -70,7 +70,7 @@ describe("PlayerActionMenuReducer", () => {
         removeCurrent: true
       });
 
-      const expected: PlayerActionMenuState = {
+      const expected: IPlayerActionMenuState = {
         // START_HOTEL_CHAIN is higher priority and should be removed
         queuedMenuActions: [PlayerActionMenuType.END_TURN]
       };
@@ -79,7 +79,7 @@ describe("PlayerActionMenuReducer", () => {
     });
 
     it("should do nothing if no action and remove current is false", () => {
-      const state: PlayerActionMenuState = {
+      const state: IPlayerActionMenuState = {
         queuedMenuActions: [PlayerActionMenuType.PLACE_TILE]
       };
 

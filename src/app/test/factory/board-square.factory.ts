@@ -1,27 +1,30 @@
 import { IBoardSquare } from "src/app/models/board-square";
+import { BoardSquareStateType } from "src/app/models/board-square-state";
 import {
   boardSquareAdapter,
-  BoardSquareState
+  IBoardSquareState
 } from "src/app/store/board/board-square.state";
 
 const createBoardSquare = ({
   id = 0,
-  positionX = 0,
-  positionY = 0,
-  display = ""
+  display = "",
+  state = BoardSquareStateType.None()
 }): IBoardSquare => ({
   id,
-  positionX,
-  positionY,
-  display
+  display,
+  state
 });
 
 const createBoardSquareState = ({
   boardSquares = [],
-  selectedBoardSquareId = 0
-}): BoardSquareState => {
-  let result: BoardSquareState = {
+  selectedBoardSquareId = 0,
+  lastTiledBoardSquareId = null,
+  tiledBoardSquareIds = []
+}): IBoardSquareState => {
+  let result: IBoardSquareState = {
     selectedBoardSquareId,
+    lastTiledBoardSquareId,
+    tiledBoardSquareIds,
     ids: [],
     entities: {}
   };

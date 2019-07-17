@@ -1,25 +1,25 @@
 import { IPlayer, PlayerType } from "src/app/models/player";
-import { playerAdapter, PlayerState } from "src/app/store/player/player.state";
+import { IPlayerState, playerAdapter } from "src/app/store/player/player.state";
 
 const createPlayer = ({
   id = 0,
   name = "",
   cash = 0,
-  tiles = [],
+  tileIds = [],
   playerType = PlayerType.HUMAN
 }): IPlayer => ({
   id,
   name,
   cash,
-  tiles,
+  tileIds,
   playerType
 });
 
 const createPlayerState = ({
   players = [],
   currentPlayerId = 0
-}): PlayerState => {
-  let result: PlayerState = {
+}): IPlayerState => {
+  let result: IPlayerState = {
     currentPlayerId,
     ids: [],
     entities: {}

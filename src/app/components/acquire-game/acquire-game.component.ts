@@ -20,7 +20,6 @@ export class AcquireGameComponent implements OnInit {
   ngOnInit() {
     this.hotelChainFacade.loadHotelChains();
     this.boardSquareFacade.loadBoardSquares();
-    this.tileFacade.loadTiles();
     this.playerFacade.loadPlayers();
   }
 }

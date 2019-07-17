@@ -1,6 +1,5 @@
 import { Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
-import { IBoardSquare } from "src/app/models/board-square";
 import { IHotelChain } from "src/app/models/hotel-chain";
 import { IPlayer } from "src/app/models/player";
 
@@ -28,7 +27,7 @@ export const HumanPlayerActions = {
 
   confirmTilePlacement: createAction(
     "[Human Player] Confirm Tile Placement",
-    props<{ boardSquare: IBoardSquare }>()
+    props<{ boardSquareId: number }>()
   ),
 
   starterTilePlayed: createAction("[Human Player] Starter Tile Played"),
@@ -46,7 +45,7 @@ export const ComputerPlayerActions = {
 
   confirmTilePlacement: createAction(
     "[Computer Player] Confirm Tile Placement",
-    props<{ boardSquare: IBoardSquare }>()
+    props<{ boardSquareId: number }>()
   ),
 
   starterTilePlayed: createAction("[Computer Player] Starter Tile Played"),

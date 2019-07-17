@@ -1,5 +1,8 @@
 import { createReducer, on } from "@ngrx/store";
-import { HumanPlayerActions } from "../player/player.actions";
+import {
+  ComputerPlayerActions,
+  HumanPlayerActions
+} from "../player/player.actions";
 import { BoardSquareActions } from "./board-square.actions";
 import { boardSquareAdapter, initialState } from "./board-square.state";
 
@@ -15,13 +18,14 @@ export const boardSquaresReducer = createReducer(
     selectedBoardSquareId: id
   })),
 
-  on(HumanPlayerActions.confirmTilePlacement, state => ({
-    ...state,
-    selectedBoardSquareId: null
-  })),
-
-  on(BoardSquareActions.updateBoardSquare, (state, { update }) => ({
-    ...boardSquareAdapter.updateOne(update, state),
-    selectedBoardSquareId: null
-  }))
+  on(
+    HumanPlayerActions.confirmTilePlacement,
+    ComputerPlayerActions.confirmTilePlacement,
+    (state, { boardSquareId }) => ({
+      ...state,
+      tiledBoardSquareIds: [...state.tiledBoardSquareIds, boardSquareId],
+      lastTiledBoardSquareId: boardSquareId,
+      selectedBoardSquareId: null
+    })
+  )
 );

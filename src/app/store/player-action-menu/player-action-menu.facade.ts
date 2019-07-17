@@ -3,7 +3,7 @@ import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { PlayerActionMenuType } from "src/app/models/player-action-menu-type";
 import { PlayerActionMenuSelectors } from "./player-action-menu.selectors";
-import { PlayerActionMenuState } from "./player-action-menu.state";
+import { IPlayerActionMenuState } from "./player-action-menu.state";
 
 @Injectable({
   providedIn: "root"
@@ -11,7 +11,7 @@ import { PlayerActionMenuState } from "./player-action-menu.state";
 export class PlayerActionMenuFacade {
   public activeMenuType$: Observable<PlayerActionMenuType>;
 
-  constructor(private store: Store<PlayerActionMenuState>) {
+  constructor(private store: Store<IPlayerActionMenuState>) {
     this.activeMenuType$ = this.store.pipe(
       select(PlayerActionMenuSelectors.getActiveMenuType)
     );

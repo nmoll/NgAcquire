@@ -5,37 +5,44 @@ const createHotelChains = (): IHotelChain[] => {
     {
       id: 1,
       name: "Worldwide",
-      type: HotelChainType.WORLDWIDE
+      type: HotelChainType.WORLDWIDE,
+      tileIds: []
     },
     {
       id: 2,
       name: "Luxor",
-      type: HotelChainType.LUXOR
+      type: HotelChainType.LUXOR,
+      tileIds: []
     },
     {
       id: 3,
       name: "Festival",
-      type: HotelChainType.FESTIVAL
+      type: HotelChainType.FESTIVAL,
+      tileIds: []
     },
     {
       id: 4,
       name: "Imperial",
-      type: HotelChainType.IMPERIAL
+      type: HotelChainType.IMPERIAL,
+      tileIds: []
     },
     {
       id: 5,
       name: "American",
-      type: HotelChainType.AMERICAN
+      type: HotelChainType.AMERICAN,
+      tileIds: []
     },
     {
       id: 6,
       name: "Continental",
-      type: HotelChainType.CONTINENTAL
+      type: HotelChainType.CONTINENTAL,
+      tileIds: []
     },
     {
       id: 7,
       name: "Tower",
-      type: HotelChainType.TOWER
+      type: HotelChainType.TOWER,
+      tileIds: []
     }
   ];
 };

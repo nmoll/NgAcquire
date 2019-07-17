@@ -3,12 +3,12 @@
     *ngFor="let boardSquare of boardSquareFacade.boardSquares$ | async"
     class="w-1/12"
   >
-    <acquire-board-square
-      [boardSquare]="boardSquare"
-      [tile]="getPlayedTile(boardSquare) | async"
-      [selected]="isSelected(boardSquare) | async"
-      [enabled]="isEnabled(boardSquare) | async"
-      (select)="onSelect($event)"
-    ></acquire-board-square>
+    <div
+      class="flex h-full justify-center items-center border border-solid"
+      [ngClass]="boardSquare.state | boardSquareState"
+      (click)="onSelect(boardSquare)"
+    >
+      {{ boardSquare.display }}
+    </div>
   </div>
 </div>

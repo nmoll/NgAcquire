@@ -1,13 +1,17 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { IBoardSquare } from "src/app/models/board-square";
-import { boardSquareAdapter, BoardSquareState } from "./board-square.state";
+import { boardSquareAdapter, IBoardSquareState } from "./board-square.state";
 
-const getBoardSquareState = createFeatureSelector<BoardSquareState>(
+const getBoardSquareState = createFeatureSelector<IBoardSquareState>(
   "boardSquareState"
 );
 
-const { selectEntities, selectAll } = boardSquareAdapter.getSelectors(
+const { selectAll: getAllBoardSquares } = boardSquareAdapter.getSelectors(
   getBoardSquareState
+);
+
+const getAllBoardSquareIds = createSelector(
+  getBoardSquareState,
+  state => state.ids as number[]
 );
 
 const getSelectedBoardSquareId = createSelector(
@@ -15,43 +19,20 @@ const getSelectedBoardSquareId = createSelector(
   state => state.selectedBoardSquareId
 );
 
-const getSelectedBoardSquare = createSelector(
-  selectEntities,
-  getSelectedBoardSquareId,
-  (entities, selectedBoardSquareId) =>
-    selectedBoardSquareId ? entities[selectedBoardSquareId] : null
+const getLastTiledBoardSquareId = createSelector(
+  getBoardSquareState,
+  state => state.lastTiledBoardSquareId
 );
 
-const getAdjacentBoardSquares = createSelector(
-  selectAll,
-  (boardSquares, props: { boardSquare: IBoardSquare }) =>
-    [
-      boardSquares.find(
-        b =>
-          b.positionX === props.boardSquare.positionX + 1 &&
-          b.positionY === props.boardSquare.positionY
-      ),
-      boardSquares.find(
-        b =>
-          b.positionX === props.boardSquare.positionX &&
-          b.positionY === props.boardSquare.positionY + 1
-      ),
-      ,
-      boardSquares.find(
-        b =>
-          b.positionX === props.boardSquare.positionX - 1 &&
-          b.positionY === props.boardSquare.positionY
-      ),
-      boardSquares.find(
-        b =>
-          b.positionX === props.boardSquare.positionX &&
-          b.positionY === props.boardSquare.positionY - 1
-      )
-    ].filter(boardSquare => !!boardSquare)
+const getTiledSquareIds = createSelector(
+  getBoardSquareState,
+  state => state.tiledBoardSquareIds
 );
 
 export const BoardSquareSelectors = {
-  getAllBoardSquares: selectAll,
-  getSelectedBoardSquare,
-  getAdjacentBoardSquares
+  getAllBoardSquares,
+  getAllBoardSquareIds,
+  getSelectedBoardSquareId,
+  getLastTiledBoardSquareId,
+  getTiledSquareIds
 };

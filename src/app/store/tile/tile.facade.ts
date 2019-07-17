@@ -1,45 +1,28 @@
 import { Injectable } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { DefaultBoardConfig } from "src/app/config/board-config";
-import { ITile } from "src/app/models/tile";
-import { TileUtils } from "src/app/utils/tile.utils";
-import { TileActions } from "./tile.actions";
+import { IAppState } from "../app-state";
 import { TileSelectors } from "./tile.selectors";
-import { TileState } from "./tile.state";
 
 @Injectable({
   providedIn: "root"
 })
 export class TileFacade {
-  public tilesInBag$: Observable<ITile[]>;
+  public tilesInBag$: Observable<number[]>;
 
-  public lastPlayedTile$: Observable<ITile>;
+  public lastPlayedTileId$: Observable<number>;
 
-  public adjacentTilesToLastPlayedTile$: Observable<ITile[]>;
+  public adjacentTilesIdsToLastPlayed$: Observable<number[]>;
 
-  constructor(private store: Store<TileState>) {
-    this.tilesInBag$ = this.store.pipe(select(TileSelectors.getAvailableTiles));
-    this.lastPlayedTile$ = this.store.pipe(
-      select(TileSelectors.getLastPlayedTile)
+  constructor(private store: Store<IAppState>) {
+    this.tilesInBag$ = this.store.pipe(
+      select(TileSelectors.getAvailableTileIds)
     );
-    this.adjacentTilesToLastPlayedTile$ = this.store.pipe(
-      select(TileSelectors.getAdjacentTilesToLastPlayedTile)
+    this.lastPlayedTileId$ = this.store.pipe(
+      select(TileSelectors.getLastPlayedTileId)
     );
-  }
-
-  public getPlayedTileAtPosition(
-    positionX: number,
-    positionY: number
-  ): Observable<ITile> {
-    return this.store.pipe(
-      select(TileSelectors.getPlayedTileAtPosition, { positionX, positionY })
-    );
-  }
-
-  public loadTiles(): void {
-    this.store.dispatch(
-      TileActions.setTiles({ tiles: TileUtils.createTiles(DefaultBoardConfig) })
+    this.adjacentTilesIdsToLastPlayed$ = this.store.pipe(
+      select(TileSelectors.getAdjacentTilesIdsToLastPlayed)
     );
   }
 }

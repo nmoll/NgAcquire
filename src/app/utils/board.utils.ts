@@ -1,6 +1,6 @@
 import { IBoardConfig } from "../config/board-config";
 import { IBoardSquare } from "../models/board-square";
-import { ITile } from "../models/tile";
+import { BoardSquareStateType } from "../models/board-square-state";
 
 /**
  * Generates the board squares based off the board dimensions
@@ -13,9 +13,8 @@ const createBoardSquares = (boardConfig: IBoardConfig) => {
       const display = positionX + boardConfig.letters[positionY - 1];
       squares.push({
         id: id++,
-        positionX,
-        positionY,
-        display
+        display,
+        state: BoardSquareStateType.None()
       });
     }
   }
@@ -25,68 +24,40 @@ const createBoardSquares = (boardConfig: IBoardConfig) => {
 const findByPosition = (
   positionX: number,
   positionY: number,
-  boardSquares: IBoardSquare[]
-): IBoardSquare =>
-  boardSquares.find(
-    boardSquare =>
-      boardSquare.positionX === positionX && boardSquare.positionY === positionY
-  );
+  boardSquareIds: number[]
+): number => boardSquareIds.find(id => id === positionX + positionY * 12);
 
-const getBoardSquareAtPosition = (
-  positionX: number,
-  positionY: number,
-  boardSquares: IBoardSquare[]
-): IBoardSquare =>
-  boardSquares.find(
-    boardSquare =>
-      boardSquare.positionX === positionX && boardSquare.positionY === positionY
-  );
+const getPositionX = (boardSquareId: number) => boardSquareId % 12;
+const getPositionY = (boardSquareId: number) => Math.floor(boardSquareId / 12);
 
-const getAdjacentBoardSquares = (
-  boardSquare: IBoardSquare,
-  boardSquares: IBoardSquare[]
-): IBoardSquare[] =>
+const getAdjacentBoardSquaresIds = (
+  boardSquareId: number,
+  boardSquareIds: number[]
+): number[] =>
   [
-    getBoardSquareAtPosition(
-      boardSquare.positionX - 1,
-      boardSquare.positionY,
-      boardSquares
+    findByPosition(
+      getPositionX(boardSquareId) - 1,
+      getPositionY(boardSquareId),
+      boardSquareIds
     ),
-    getBoardSquareAtPosition(
-      boardSquare.positionX + 1,
-      boardSquare.positionY,
-      boardSquares
+    findByPosition(
+      getPositionX(boardSquareId) + 1,
+      getPositionY(boardSquareId),
+      boardSquareIds
     ),
-    getBoardSquareAtPosition(
-      boardSquare.positionX,
-      boardSquare.positionY - 1,
-      boardSquares
+    findByPosition(
+      getPositionX(boardSquareId),
+      getPositionY(boardSquareId) - 1,
+      boardSquareIds
     ),
-    getBoardSquareAtPosition(
-      boardSquare.positionX,
-      boardSquare.positionY + 1,
-      boardSquares
+    findByPosition(
+      getPositionX(boardSquareId),
+      getPositionY(boardSquareId) + 1,
+      boardSquareIds
     )
-  ].filter(boardSquare => !!boardSquare);
-
-const hasTile = (boardSquare: IBoardSquare, playedTiles: ITile[]) =>
-  !!playedTiles.find(
-    tile =>
-      tile.positionX === boardSquare.positionX &&
-      tile.positionY === boardSquare.positionY
-  );
-
-const hasAdjacentTile = (
-  boardSquare: IBoardSquare,
-  boardSquares: IBoardSquare[],
-  playedTiles: ITile[]
-): boolean =>
-  !!getAdjacentBoardSquares(boardSquare, boardSquares).find(boardSquare =>
-    hasTile(boardSquare, playedTiles)
-  );
+  ].filter(boardSquareId => !!boardSquareId);
 
 export const BoardUtils = {
   createBoardSquares,
-  findByPosition,
-  hasAdjacentTile
+  getAdjacentBoardSquaresIds
 };

@@ -5,7 +5,7 @@ import { StoreModule } from "@ngrx/store";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AcquireGameComponent } from "./components/acquire-game/acquire-game.component";
-import { BoardSquareComponent } from "./components/board/board-square.component";
+import { BoardSquareStatePipe } from "./components/board/board-square-state.pipe";
 import { BoardComponent } from "./components/board/board.component";
 import { PlayerActionMenuComputerMovingComponent } from "./components/player-action-menu/player-action-menu-computer-moving.component";
 import { PlayerActionMenuEndTurn } from "./components/player-action-menu/player-action-menu-end-turn.component";
@@ -14,9 +14,9 @@ import { PlayerActionMenuStartHotelChainComponent } from "./components/player-ac
 import { PlayerActionMenuComponent } from "./components/player-action-menu/player-action-menu.component";
 import { PlayerDeckComponent } from "./components/player-deck/player-deck.component";
 import { reducers } from "./store";
+import { HotelChainEffects } from "./store/hotel-chain/hotel-chain.effects";
 import { PlayerActionMenuEffects } from "./store/player-action-menu/player-action-menu.effects";
 import { PlayerEffects } from "./store/player/player.effects";
-import { TileEffects } from "./store/tile/tile.effects";
 
 @NgModule({
   declarations: [
@@ -29,13 +29,17 @@ import { TileEffects } from "./store/tile/tile.effects";
     PlayerActionMenuComputerMovingComponent,
     PlayerActionMenuStartHotelChainComponent,
     PlayerActionMenuEndTurn,
-    BoardSquareComponent
+    BoardSquareStatePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([PlayerEffects, PlayerActionMenuEffects, TileEffects])
+    EffectsModule.forRoot([
+      PlayerEffects,
+      PlayerActionMenuEffects,
+      HotelChainEffects
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

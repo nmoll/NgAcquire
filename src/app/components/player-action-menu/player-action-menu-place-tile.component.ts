@@ -5,13 +5,12 @@ import {
   Input,
   Output
 } from "@angular/core";
-import { IBoardSquare } from "../../models/board-square";
 
 @Component({
   selector: "acquire-player-action-menu-place-tile",
   template: `
     <button
-      [disabled]="!selectedBoardSquare"
+      [disabled]="!selectedBoardSquareId"
       (click)="onConfirm()"
       class="acquire-button w-full"
     >
@@ -22,12 +21,12 @@ import { IBoardSquare } from "../../models/board-square";
 })
 export class PlayerActionMenuPlaceTileComponent {
   @Input()
-  public selectedBoardSquare: IBoardSquare;
+  public selectedBoardSquareId: number;
 
   @Output()
-  public confirm = new EventEmitter<IBoardSquare>();
+  public confirm = new EventEmitter<number>();
 
   public onConfirm(): void {
-    this.confirm.emit(this.selectedBoardSquare);
+    this.confirm.emit(this.selectedBoardSquareId);
   }
 }

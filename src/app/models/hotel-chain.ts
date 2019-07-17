@@ -1,15 +1,16 @@
 export enum HotelChainType {
-  WORLDWIDE,
-  LUXOR,
-  FESTIVAL,
-  IMPERIAL,
-  AMERICAN,
-  CONTINENTAL,
-  TOWER
+  WORLDWIDE = "WORLDWIDE",
+  LUXOR = "LUXOR",
+  FESTIVAL = "FESTIVAL",
+  IMPERIAL = "IMPERIAL",
+  AMERICAN = "AMERICAN",
+  CONTINENTAL = "CONTINENTAL",
+  TOWER = "TOWER"
 }
 
 export interface IHotelChain {
   id: number;
   name: string;
   type: HotelChainType;
+  tileIds: number[];
 }

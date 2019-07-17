@@ -7,10 +7,8 @@ import {
   IPlayerConfig
 } from "src/app/config/player-config";
 import { IPlayer, PlayerType } from "src/app/models/player";
-import { BoardUtils } from "src/app/utils/board.utils";
 import { PlayerUtils } from "src/app/utils/player.utils";
 import { TileUtils } from "src/app/utils/tile.utils";
-import { BoardSquareFacade } from "../board/board-square.facade";
 import { TileFacade } from "../tile/tile.facade";
 import {
   ComputerPlayerActions,
@@ -26,17 +24,16 @@ export class PlayerEffects {
   constructor(
     private actions$: Actions,
     private tileFacade: TileFacade,
-    private playerFacade: PlayerFacade,
-    private boardSquareFacade: BoardSquareFacade
+    private playerFacade: PlayerFacade
   ) {}
 
   loadPlayers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PlayerActions.loadPlayers),
       withLatestFrom(this.tileFacade.tilesInBag$),
-      mergeMap(([_, tiles]) => {
+      mergeMap(([_, tileIds]) => {
         return this.mockGetPlayers(DefaultPlayerConfig).pipe(
-          map(players => PlayerUtils.initPlayerTiles(players, tiles)),
+          map(players => PlayerUtils.initPlayerTiles(players, tileIds)),
           map(players => PlayerActions.loadPlayersSuccess({ players }))
         );
       })
@@ -60,12 +57,12 @@ export class PlayerEffects {
         ComputerPlayerActions.confirmTilePlacement
       ),
       withLatestFrom(this.playerFacade.currentPlayer$),
-      map(([{ boardSquare }, player]) =>
+      map(([{ boardSquareId }, player]) =>
         PlayerActions.updatePlayer({
           update: {
             id: player.id,
             changes: {
-              tiles: TileUtils.removeTileById(player.tiles, boardSquare.id)
+              tileIds: player.tileIds.filter(tileId => tileId !== boardSquareId)
             }
           }
         })
@@ -86,17 +83,10 @@ export class PlayerEffects {
   computerMove$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ComputerPlayerActions.turnStarted),
-      withLatestFrom(
-        this.playerFacade.currentPlayer$,
-        this.boardSquareFacade.boardSquares$
-      ),
-      map(([_, player, boardSquares]) =>
+      withLatestFrom(this.playerFacade.currentPlayer$),
+      map(([_, player]) =>
         ComputerPlayerActions.confirmTilePlacement({
-          boardSquare: BoardUtils.findByPosition(
-            player.tiles[0].positionX,
-            player.tiles[0].positionY,
-            boardSquares
-          )
+          boardSquareId: player.tileIds[0]
         })
       ),
       delay(1000)
@@ -115,7 +105,10 @@ export class PlayerEffects {
           update: {
             id: player.id,
             changes: {
-              tiles: [...player.tiles, ...TileUtils.pickRandomTiles(1, tiles)]
+              tileIds: [
+                ...player.tileIds,
+                ...TileUtils.pickRandomTiles(1, tiles)
+              ]
             }
           }
         })
@@ -144,21 +137,21 @@ export class PlayerEffects {
         id: 1,
         name: "Nate",
         cash: playerConfig.startingCash,
-        tiles: [],
+        tileIds: [],
         playerType: PlayerType.HUMAN
       },
       {
         id: 2,
         name: "Kate",
         cash: playerConfig.startingCash,
-        tiles: [],
+        tileIds: [],
         playerType: PlayerType.HUMAN
       },
       {
         id: 3,
         name: "Computer",
         cash: playerConfig.startingCash,
-        tiles: [],
+        tileIds: [],
         playerType: PlayerType.COMPUTER
       }
     ]);

@@ -4,12 +4,10 @@ import { boardSquaresReducer } from "./board/board-square.reducer";
 import { hotelChainReducer } from "./hotel-chain/hotel-chain.reducer";
 import { playerActionMenuReducer } from "./player-action-menu/player-action-menu.reducer";
 import { playersReducer } from "./player/player.reducer";
-import { tileReducer } from "./tile/tile.reducer";
 
 export const reducers: ActionReducerMap<IAppState> = {
   boardSquareState: boardSquaresReducer,
   playerState: playersReducer,
-  tileState: tileReducer,
   playerActionMenuState: playerActionMenuReducer,
   hotelChainState: hotelChainReducer
 };

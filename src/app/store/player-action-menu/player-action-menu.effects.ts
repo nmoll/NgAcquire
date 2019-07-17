@@ -30,7 +30,7 @@ export class PlayerActionMenuEffects {
   showChooseHotelChainToStartMenu$ = createEffect(() =>
     this.actions$.pipe(
       ofType(HumanPlayerActions.confirmTilePlacement),
-      withLatestFrom(this.tileFacade.adjacentTilesToLastPlayedTile$),
+      withLatestFrom(this.tileFacade.adjacentTilesIdsToLastPlayed$),
       filter(([_, tiles]) => tiles.length > 0),
       map(_ =>
         PlayerActionMenuActions.updateActionMenuQueue({
@@ -76,3 +76,30 @@ export class PlayerActionMenuEffects {
     )
   );
 }
+
+interface IPlayerTurn {
+  seq: number;
+  playerId: number;
+  selectedBoardSquareId: number;
+  selectedHotelId?: number;
+  purchasedStocks?: number[];
+}
+
+const turns: IPlayerTurn[] = [
+  {
+    seq: 1,
+    playerId: 1,
+    selectedBoardSquareId: 5
+  },
+  {
+    seq: 2,
+    playerId: 2,
+    selectedBoardSquareId: 10
+  },
+  {
+    seq: 3,
+    playerId: 1,
+    selectedBoardSquareId: 6,
+    selectedHotelId: 1
+  }
+];

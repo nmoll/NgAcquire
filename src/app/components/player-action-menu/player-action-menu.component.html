@@ -8,13 +8,15 @@
     <ng-container [ngSwitch]="playerActionMenuFacade.activeMenuType$ | async">
       <acquire-player-action-menu-place-tile
         *ngSwitchCase="actionMenuType.PLACE_TILE"
-        [selectedBoardSquare]="boardSquareFacade.selectedBoardSquare$ | async"
+        [selectedBoardSquareId]="
+          boardSquareFacade.selectedBoardSquareId$ | async
+        "
         (confirm)="playerFacade.confirmTilePlacement($event)"
       ></acquire-player-action-menu-place-tile>
 
       <acquire-player-action-menu-start-hotel-chain
         *ngSwitchCase="actionMenuType.START_HOTEL_CHAIN"
-        [hotelChains]="hotelChainFacade.hotelChains$ | async"
+        [hotelChains]="hotelChainFacade.inactiveHotelChains$ | async"
         (hotelSelected)="playerFacade.starterHotelChainChosen($event)"
       >
       </acquire-player-action-menu-start-hotel-chain>

@@ -1,9 +1,9 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { playerAdapter, PlayerState } from "./player.state";
+import { IPlayerState, playerAdapter } from "./player.state";
 
-const getPlayerState = createFeatureSelector<PlayerState>("playerState");
+const getPlayerState = createFeatureSelector<IPlayerState>("playerState");
 
-const { selectIds, selectEntities, selectAll } = playerAdapter.getSelectors(
+const { selectEntities, selectAll } = playerAdapter.getSelectors(
   getPlayerState
 );
 
@@ -18,11 +18,16 @@ const getCurrentPlayer = createSelector(
   (entities, currentPlayerId) => entities[currentPlayerId]
 );
 
+const getCurrentPlayerTiles = createSelector(
+  getCurrentPlayer,
+  currentPlayer => currentPlayer.tileIds
+);
+
 const getAllPlayerTiles = createSelector(
   selectAll,
   players =>
     players
-      .map(player => player.tiles)
+      .map(player => player.tileIds)
       .reduce((result, tiles) => result.concat(tiles), [])
 );
 
@@ -30,5 +35,6 @@ export const PlayerSelectors = {
   getAllPlayers: selectAll,
   getCurrentPlayerId,
   getCurrentPlayer,
+  getCurrentPlayerTiles,
   getAllPlayerTiles
 };

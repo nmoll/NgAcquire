@@ -2,12 +2,11 @@ import { Injectable } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { distinctUntilChanged, filter } from "rxjs/operators";
-import { IBoardSquare } from "src/app/models/board-square";
 import { IHotelChain } from "src/app/models/hotel-chain";
 import { IPlayer } from "src/app/models/player";
 import { HumanPlayerActions, PlayerActions } from "../player/player.actions";
 import { PlayerSelectors } from "../player/player.selectors";
-import { PlayerState } from "../player/player.state";
+import { IPlayerState } from "../player/player.state";
 
 @Injectable({
   providedIn: "root"
@@ -19,7 +18,7 @@ export class PlayerFacade {
 
   public currentPlayerChanged$: Observable<IPlayer>;
 
-  constructor(private store: Store<PlayerState>) {
+  constructor(private store: Store<IPlayerState>) {
     this.players$ = this.store.pipe(select(PlayerSelectors.getAllPlayers));
 
     this.currentPlayer$ = this.store.pipe(
@@ -40,9 +39,9 @@ export class PlayerFacade {
     this.store.dispatch(PlayerActions.setCurrentPlayer({ id: player.id }));
   }
 
-  public confirmTilePlacement(boardSquare: IBoardSquare): void {
+  public confirmTilePlacement(boardSquareId: number): void {
     this.store.dispatch(
-      HumanPlayerActions.confirmTilePlacement({ boardSquare })
+      HumanPlayerActions.confirmTilePlacement({ boardSquareId })
     );
   }
 

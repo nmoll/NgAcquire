@@ -7,5 +7,19 @@ export const hotelChainReducer = createReducer(
 
   on(HotelChainActions.setHotelChains, (state, { hotelChains }) =>
     hotelChainAdapter.addMany(hotelChains, state)
+  ),
+
+  on(
+    HotelChainActions.starterHotelChainSetTileIds,
+    (state, { hotelChain, tileIds }) =>
+      hotelChainAdapter.updateOne(
+        {
+          id: hotelChain.id,
+          changes: {
+            tileIds
+          }
+        },
+        state
+      )
   )
 );

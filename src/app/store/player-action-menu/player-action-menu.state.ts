@@ -1,9 +1,9 @@
 import { PlayerActionMenuType } from "src/app/models/player-action-menu-type";
 
-export interface PlayerActionMenuState {
+export interface IPlayerActionMenuState {
   queuedMenuActions: PlayerActionMenuType[];
 }
 
-export const initialState: PlayerActionMenuState = {
+export const initialState: IPlayerActionMenuState = {
   queuedMenuActions: []
 };
