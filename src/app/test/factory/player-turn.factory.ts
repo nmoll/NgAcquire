@@ -1,7 +1,11 @@
-import { IPlayerTurn } from "src/app/models/player-turn";
+import {
+  BoardSquareSelectedStateType,
+  IPlayerTurn
+} from "src/app/models/player-turn";
 
 const createPlayerTurn = (props: Partial<IPlayerTurn>): IPlayerTurn => ({
-  selectedBoardSquareId: null,
+  seq: 0,
+  boardSquareSelectedState: BoardSquareSelectedStateType.None(),
   boardSquareOptionIds: [],
   ...props
 });

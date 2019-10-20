@@ -7,7 +7,7 @@ import { BoardSquareStateType } from "../models/board-square-state";
  */
 const createBoardSquares = (boardConfig: IBoardConfig) => {
   const squares: IBoardSquare[] = [];
-  var id = 1;
+  var id = 0;
   for (var positionY = 1; positionY <= boardConfig.height; positionY++) {
     for (var positionX = 1; positionX <= boardConfig.width; positionX++) {
       const display = positionX + boardConfig.letters[positionY - 1];

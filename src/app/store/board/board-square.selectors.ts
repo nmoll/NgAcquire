@@ -1,4 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { AcquireEngine } from "src/app/engine/acquire-engine";
+import { PlayerTurnSelectors } from "../player-turn/player-turn.selectors";
 import { boardSquareAdapter, IBoardSquareState } from "./board-square.state";
 
 const getBoardSquareState = createFeatureSelector<IBoardSquareState>(
@@ -29,10 +31,28 @@ const getTiledSquareIds = createSelector(
   state => state.tiledBoardSquareIds
 );
 
+const getAllBoardSquaresWithState = createSelector(
+  getAllBoardSquares,
+  PlayerTurnSelectors.getAllPlayerTurns,
+  (boardSquares, playerTurns) => {
+    const initState = boardSquares.map(square => square.state);
+    const computedStates = AcquireEngine.computeStateWithTurns(
+      initState,
+      playerTurns
+    );
+
+    return boardSquares.map((square, index) => ({
+      ...square,
+      state: computedStates[index]
+    }));
+  }
+);
+
 export const BoardSquareSelectors = {
   getAllBoardSquares,
   getAllBoardSquareIds,
   getSelectedBoardSquareId,
   getLastTiledBoardSquareId,
-  getTiledSquareIds
+  getTiledSquareIds,
+  getAllBoardSquaresWithState
 };

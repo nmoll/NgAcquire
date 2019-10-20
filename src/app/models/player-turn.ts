@@ -31,6 +31,7 @@ export const BoardSquareSelectedStateType = {
 };
 
 export interface IPlayerTurn {
+  seq: number;
   boardSquareOptionIds: number[];
   boardSquareSelectedState: BoardSquareSelectedState;
   selectedHotelChain?: HotelChainType;
